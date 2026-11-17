@@ -1,10 +1,16 @@
-import React from 'react';
-import { StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
+import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  type StyleProp,
+  type ViewStyle,
+} from "react-native";
 
-import { useAppTheme } from '@/theme';
+import { useAppTheme } from "@/theme";
 
-import { AppButton } from './app-button';
-import { AppIcon, type AppIconName } from './app-icon';
+import { AppButton } from "./app-button";
+import { AppIcon, type AppIconName } from "./app-icon";
 
 export interface AppEmptyStateProps {
   icon: AppIconName;
@@ -35,19 +41,17 @@ export function AppEmptyState({
         style={[
           styles.iconCircle,
           { backgroundColor: colors.surfaceContainerHighest },
-        ]}>
-        <AppIcon
-          name={icon}
-          size={30}
-          color={iconColor ?? colors.primary}
-        />
+        ]}
+      >
+        <AppIcon name={icon} size={30} color={iconColor ?? colors.primary} />
       </View>
       <Text
         style={[
           typography.titleMedium,
           styles.title,
           { color: colors.onSurface },
-        ]}>
+        ]}
+      >
         {title}
       </Text>
       {description ? (
@@ -56,7 +60,8 @@ export function AppEmptyState({
             typography.bodyMedium,
             styles.description,
             { color: colors.onSurfaceVariant },
-          ]}>
+          ]}
+        >
           {description}
         </Text>
       ) : null}
@@ -76,24 +81,24 @@ export function AppEmptyState({
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     padding: 24,
   },
   iconCircle: {
     width: 64,
     height: 64,
     borderRadius: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     marginTop: 16,
-    textAlign: 'center',
+    textAlign: "center",
   },
   description: {
     marginTop: 6,
-    textAlign: 'center',
+    textAlign: "center",
   },
   actionWrapper: {
     marginTop: 20,

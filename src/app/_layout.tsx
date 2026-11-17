@@ -1,13 +1,13 @@
-import { Stack, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
-import { AppState, type AppStateStatus } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Stack, ThemeProvider } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
+import React, { useEffect } from "react";
+import { AppState, type AppStateStatus } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { AuthProvider, REQUIRE_AUTH, useAuthSession } from '@/auth';
-import { SnackbarProvider } from '@/components/core';
-import { AppThemeProvider, toNavigationTheme, useAppTheme } from '@/theme';
+import { AuthProvider, REQUIRE_AUTH, useAuthSession } from "@/auth";
+import { SnackbarProvider } from "@/components/core";
+import { AppThemeProvider, toNavigationTheme, useAppTheme } from "@/theme";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -29,14 +29,14 @@ function RootNavigator() {
 
   useEffect(() => {
     const subscription = AppState.addEventListener(
-      'change',
+      "change",
       (nextState: AppStateStatus) => {
-        if (nextState === 'active') {
+        if (nextState === "active") {
           onAppResumed();
-        } else if (nextState === 'background') {
+        } else if (nextState === "background") {
           onAppPaused();
         }
-      }
+      },
     );
 
     return () => {
@@ -46,7 +46,7 @@ function RootNavigator() {
 
   return (
     <ThemeProvider value={toNavigationTheme(theme)}>
-      <StatusBar style={theme.isDark ? 'light' : 'dark'} />
+      <StatusBar style={theme.isDark ? "light" : "dark"} />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Protected guard={!REQUIRE_AUTH || isAuthenticated}>
           <Stack.Screen name="(tabs)" />

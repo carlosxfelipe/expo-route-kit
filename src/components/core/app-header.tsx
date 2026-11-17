@@ -1,11 +1,11 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useAppTheme } from '@/theme';
+import { useAppTheme } from "@/theme";
 
-import type { AppIconName } from './app-icon';
-import { HeaderActions } from './header-actions';
+import type { AppIconName } from "./app-icon";
+import { HeaderActions } from "./header-actions";
 
 export interface AppHeaderProps {
   title: string;
@@ -46,17 +46,20 @@ export function AppHeader({
           paddingTop: insets.top,
           backgroundColor: resolvedBg,
         },
-      ]}>
+      ]}
+    >
       <View style={styles.toolbar}>
         {leading ? <View style={styles.leading}>{leading}</View> : null}
         <View
           style={[
             styles.titleContainer,
             centerTitle ? styles.titleCentered : undefined,
-          ]}>
+          ]}
+        >
           <Text
             numberOfLines={1}
-            style={[typography.titleLarge, { color: colors.onSurface }]}>
+            style={[typography.titleLarge, { color: colors.onSurface }]}
+          >
             {title}
           </Text>
         </View>
@@ -76,12 +79,12 @@ export function AppHeader({
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: "100%",
   },
   toolbar: {
     height: 56,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 16,
   },
   leading: {
@@ -89,9 +92,9 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   titleCentered: {
-    alignItems: 'center',
+    alignItems: "center",
   },
 });

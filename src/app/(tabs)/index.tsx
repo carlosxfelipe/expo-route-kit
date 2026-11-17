@@ -1,8 +1,8 @@
-import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
-import { useAuthSession } from '@/auth';
+import { useAuthSession } from "@/auth";
 import {
   AppBannerCard,
   AppBottomSheet,
@@ -12,28 +12,28 @@ import {
   AppListCard,
   ThemeSwitcher,
   useSnackbar,
-} from '@/components/core';
-import { THEME_MODE_LABELS, useAppTheme, useThemeMode } from '@/theme';
+} from "@/components/core";
+import { THEME_MODE_LABELS, useAppTheme, useThemeMode } from "@/theme";
 
 interface ShortcutItem {
   icon: AppIconName;
   title: string;
   subtitle: string;
-  route: '/explore' | '/profile';
+  route: "/explore" | "/profile";
 }
 
 const SHORTCUTS: readonly ShortcutItem[] = [
   {
-    icon: 'compass-outline',
-    title: 'Explore',
-    subtitle: 'Browse features and sections',
-    route: '/explore',
+    icon: "compass-outline",
+    title: "Explore",
+    subtitle: "Browse features and sections",
+    route: "/explore",
   },
   {
-    icon: 'account-outline',
-    title: 'Profile',
-    subtitle: 'Account and preferences',
-    route: '/profile',
+    icon: "account-outline",
+    title: "Profile",
+    subtitle: "Account and preferences",
+    route: "/profile",
   },
 ];
 
@@ -54,11 +54,12 @@ export default function HomeScreen() {
         rightIcon="bell-outline"
         rightIconTooltip="Notifications"
         rightIconBadgeCount={3}
-        onRightIconPress={() => showSnackbar('3 new notifications')}
+        onRightIconPress={() => showSnackbar("3 new notifications")}
       />
       <ScrollView
         contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         <AppBannerCard
           title="Welcome to Expo Route Kit"
           description="Starter template configured with expo-router and a persistent bottom navigation shell."
@@ -98,21 +99,26 @@ export default function HomeScreen() {
       <AppBottomSheet
         visible={appearanceSheetVisible}
         onClose={() => setAppearanceSheetVisible(false)}
-        title="Appearance">
-        <Text style={[typography.titleMedium, styles.sheetLabel]}>App theme</Text>
+        title="Appearance"
+      >
+        <Text style={[typography.titleMedium, styles.sheetLabel]}>
+          App theme
+        </Text>
         <ThemeSwitcher />
       </AppBottomSheet>
 
       <AppBottomSheet
         visible={logoutSheetVisible}
         onClose={() => setLogoutSheetVisible(false)}
-        title="Logout">
+        title="Logout"
+      >
         <Text
           style={[
             typography.bodyMedium,
             styles.logoutMessage,
             { color: colors.onSurfaceVariant },
-          ]}>
+          ]}
+        >
           Are you sure you want to sign out of your account?
         </Text>
         <View style={styles.sheetActions}>
@@ -160,7 +166,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   sheetActions: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 12,
   },
   actionItem: {

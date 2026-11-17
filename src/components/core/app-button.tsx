@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   ActivityIndicator,
   Pressable,
@@ -7,13 +7,13 @@ import {
   View,
   type StyleProp,
   type ViewStyle,
-} from 'react-native';
+} from "react-native";
 
-import { useAppTheme } from '@/theme';
+import { useAppTheme } from "@/theme";
 
-import { AppIcon, type AppIconName } from './app-icon';
+import { AppIcon, type AppIconName } from "./app-icon";
 
-export type AppButtonVariant = 'filled' | 'tonal' | 'outlined' | 'text';
+export type AppButtonVariant = "filled" | "tonal" | "outlined" | "text";
 
 export interface AppButtonProps {
   label: string;
@@ -32,7 +32,7 @@ export interface AppButtonProps {
 export function AppButton({
   label,
   onPress,
-  variant = 'filled',
+  variant = "filled",
   leftIcon,
   rightIcon,
   isDisabled = false,
@@ -49,39 +49,39 @@ export function AppButton({
     if (isDisabled) {
       return {
         backgroundColor:
-          variant === 'filled' || variant === 'tonal'
+          variant === "filled" || variant === "tonal"
             ? colors.surfaceContainerHighest
-            : 'transparent',
+            : "transparent",
         foregroundColor: colors.onSurfaceVariant,
         borderColor:
-          variant === 'outlined' ? colors.outlineVariant : 'transparent',
+          variant === "outlined" ? colors.outlineVariant : "transparent",
       };
     }
 
     switch (variant) {
-      case 'filled':
+      case "filled":
         return {
           backgroundColor: colors.primary,
           foregroundColor: colors.onPrimary,
-          borderColor: 'transparent',
+          borderColor: "transparent",
         };
-      case 'tonal':
+      case "tonal":
         return {
           backgroundColor: colors.secondaryContainer,
           foregroundColor: colors.onSecondaryContainer,
-          borderColor: 'transparent',
+          borderColor: "transparent",
         };
-      case 'outlined':
+      case "outlined":
         return {
-          backgroundColor: 'transparent',
+          backgroundColor: "transparent",
           foregroundColor: colors.primary,
           borderColor: colors.outlineVariant,
         };
-      case 'text':
+      case "text":
         return {
-          backgroundColor: 'transparent',
+          backgroundColor: "transparent",
           foregroundColor: colors.primary,
-          borderColor: 'transparent',
+          borderColor: "transparent",
         };
     }
   })();
@@ -99,24 +99,27 @@ export function AppButton({
           borderRadius,
           backgroundColor,
           borderColor,
-          borderWidth: variant === 'outlined' ? 1 : 0,
-          alignSelf: fullWidth ? 'stretch' : 'flex-start',
+          borderWidth: variant === "outlined" ? 1 : 0,
+          alignSelf: fullWidth ? "stretch" : "flex-start",
           opacity: isDisabled ? 0.5 : pressed && !blocked ? 0.82 : 1,
         },
         style,
-      ]}>
+      ]}
+    >
       <View style={styles.contentWrapper}>
         <View
           style={[
             styles.contentRow,
             isLoading ? styles.hiddenContent : undefined,
-          ]}>
+          ]}
+        >
           {leftIcon ? (
             <AppIcon name={leftIcon} size={18} color={foregroundColor} />
           ) : null}
           <Text
             numberOfLines={1}
-            style={[typography.labelLarge, { color: foregroundColor }]}>
+            style={[typography.labelLarge, { color: foregroundColor }]}
+          >
             {label}
           </Text>
           {rightIcon ? (
@@ -136,30 +139,30 @@ export function AppButton({
 const styles = StyleSheet.create({
   base: {
     paddingHorizontal: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   contentWrapper: {
-    position: 'relative',
-    justifyContent: 'center',
-    alignItems: 'center',
+    position: "relative",
+    justifyContent: "center",
+    alignItems: "center",
   },
   contentRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     gap: 8,
   },
   hiddenContent: {
     opacity: 0,
   },
   loaderOverlay: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     right: 0,
     bottom: 0,
     left: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

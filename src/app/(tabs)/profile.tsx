@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { PlaceholderScreen } from '@/components/core';
+import { PlaceholderScreen } from "@/components/core";
 
 export default function ProfileScreen() {
   return (

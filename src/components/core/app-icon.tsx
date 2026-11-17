@@ -1,9 +1,9 @@
 import {
   MaterialDesignIcons,
   type MaterialDesignIconsIconName,
-} from '@react-native-vector-icons/material-design-icons';
-import React from 'react';
-import type { StyleProp, TextStyle } from 'react-native';
+} from "@react-native-vector-icons/material-design-icons";
+import React from "react";
+import type { StyleProp, TextStyle } from "react-native";
 
 export type AppIconName = MaterialDesignIconsIconName;
 

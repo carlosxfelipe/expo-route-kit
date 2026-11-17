@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   KeyboardAvoidingView,
   Modal,
@@ -8,12 +8,12 @@ import {
   StyleSheet,
   Text,
   View,
-} from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useAppTheme } from '@/theme';
+import { useAppTheme } from "@/theme";
 
-import { AppIcon } from './app-icon';
+import { AppIcon } from "./app-icon";
 
 export interface AppBottomSheetProps {
   visible: boolean;
@@ -39,12 +39,14 @@ export function AppBottomSheet({
       transparent
       animationType="slide"
       statusBarTranslucent
-      onRequestClose={onClose}>
+      onRequestClose={onClose}
+    >
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        style={styles.overlay}>
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={styles.overlay}
+      >
         <Pressable
-          style={[styles.backdrop, { backgroundColor: 'rgba(0, 0, 0, 0.45)' }]}
+          style={[styles.backdrop, { backgroundColor: "rgba(0, 0, 0, 0.45)" }]}
           onPress={onClose}
           accessibilityLabel="Close sheet"
         />
@@ -55,7 +57,8 @@ export function AppBottomSheet({
               backgroundColor: colors.surfaceContainerLow,
               paddingBottom: Math.max(insets.bottom, 16) + 8,
             },
-          ]}>
+          ]}
+        >
           {showDragHandle ? (
             <View style={styles.handleWrapper}>
               <View
@@ -69,7 +72,8 @@ export function AppBottomSheet({
           <ScrollView
             bounces={false}
             keyboardShouldPersistTaps="handled"
-            contentContainerStyle={styles.body}>
+            contentContainerStyle={styles.body}
+          >
             {title ? (
               <View style={styles.headerRow}>
                 <Text
@@ -77,7 +81,8 @@ export function AppBottomSheet({
                     typography.titleLarge,
                     styles.title,
                     { color: colors.onSurface },
-                  ]}>
+                  ]}
+                >
                   {title}
                 </Text>
                 <Pressable
@@ -87,8 +92,11 @@ export function AppBottomSheet({
                   accessibilityLabel="Close"
                   style={({ pressed }) => [
                     styles.closeButton,
-                    pressed && { backgroundColor: colors.surfaceContainerHighest },
-                  ]}>
+                    pressed && {
+                      backgroundColor: colors.surfaceContainerHighest,
+                    },
+                  ]}
+                >
                   <AppIcon name="close" size={22} color={colors.onSurface} />
                 </Pressable>
               </View>
@@ -104,26 +112,26 @@ export function AppBottomSheet({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   backdrop: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     right: 0,
     bottom: 0,
     left: 0,
   },
   sheet: {
-    width: '100%',
+    width: "100%",
     maxWidth: 560,
-    alignSelf: 'center',
+    alignSelf: "center",
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    maxHeight: '85%',
-    overflow: 'hidden',
+    maxHeight: "85%",
+    overflow: "hidden",
   },
   handleWrapper: {
-    alignItems: 'center',
+    alignItems: "center",
     paddingTop: 12,
     paddingBottom: 6,
   },
@@ -138,19 +146,19 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   headerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 12,
   },
   title: {
     flex: 1,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   closeButton: {
     width: 36,
     height: 36,
     borderRadius: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

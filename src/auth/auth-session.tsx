@@ -4,7 +4,7 @@ import React, {
   useContext,
   useMemo,
   useState,
-} from 'react';
+} from "react";
 
 // Set to false to disable the login flow and start directly on the main tabs.
 export const REQUIRE_AUTH = true;
@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       signIn,
       signOut,
     }),
-    [isAuthenticated, signIn, signOut]
+    [isAuthenticated, signIn, signOut],
   );
 
   return (
@@ -48,7 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuthSession(): AuthSessionContextValue {
   const context = useContext(AuthSessionContext);
   if (!context) {
-    throw new Error('useAuthSession must be used within an AuthProvider');
+    throw new Error("useAuthSession must be used within an AuthProvider");
   }
   return context;
 }

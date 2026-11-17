@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Pressable,
   StyleSheet,
@@ -6,11 +6,11 @@ import {
   View,
   type StyleProp,
   type ViewStyle,
-} from 'react-native';
+} from "react-native";
 
-import { useAppTheme } from '@/theme';
+import { useAppTheme } from "@/theme";
 
-import { AppIcon, type AppIconName } from './app-icon';
+import { AppIcon, type AppIconName } from "./app-icon";
 
 export interface AppListCardProps {
   title: string;
@@ -48,18 +48,14 @@ export function AppListCard({
   const effectiveTrailing =
     trailing ??
     (showChevron ? (
-      <AppIcon
-        name="chevron-right"
-        size={22}
-        color={colors.onSurfaceVariant}
-      />
+      <AppIcon name="chevron-right" size={22} color={colors.onSurfaceVariant} />
     ) : null);
 
   return (
     <Pressable
       onPress={onPress}
       disabled={!onPress}
-      accessibilityRole={onPress ? 'button' : undefined}
+      accessibilityRole={onPress ? "button" : undefined}
       style={({ pressed }) => [
         styles.card,
         {
@@ -71,21 +67,25 @@ export function AppListCard({
               : colors.surfaceContainerLow,
         },
         style,
-      ]}>
+      ]}
+    >
       {effectiveLeading ? (
         <View style={styles.leading}>{effectiveLeading}</View>
       ) : null}
       <View style={styles.content}>
         <Text
-          style={[typography.bodyLarge, styles.title, { color: colors.onSurface }]}>
+          style={[
+            typography.bodyLarge,
+            styles.title,
+            { color: colors.onSurface },
+          ]}
+        >
           {title}
         </Text>
         {subtitle ? (
           <Text
-            style={[
-              typography.bodyMedium,
-              { color: colors.onSurfaceVariant },
-            ]}>
+            style={[typography.bodyMedium, { color: colors.onSurfaceVariant }]}
+          >
             {subtitle}
           </Text>
         ) : null}
@@ -99,8 +99,8 @@ export function AppListCard({
 
 const styles = StyleSheet.create({
   card: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
     paddingHorizontal: 16,
     paddingVertical: 14,
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   title: {
-    fontWeight: '500',
+    fontWeight: "500",
   },
   trailing: {
     marginLeft: 12,

@@ -1,5 +1,5 @@
-import { useNavigation, usePreventRemove } from 'expo-router';
-import React, { useState } from 'react';
+import { useNavigation, usePreventRemove } from "expo-router";
+import React, { useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
@@ -8,17 +8,17 @@ import {
   StyleSheet,
   Text,
   View,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { useAuthSession } from '@/auth';
+import { useAuthSession } from "@/auth";
 import {
   AppButton,
   AppIcon,
   AppTextField,
   useSnackbar,
-} from '@/components/core';
-import { useAppTheme } from '@/theme';
+} from "@/components/core";
+import { useAppTheme } from "@/theme";
 
 function LoginHeader() {
   const { colors, typography } = useAppTheme();
@@ -26,10 +26,8 @@ function LoginHeader() {
   return (
     <View style={styles.header}>
       <View
-        style={[
-          styles.logoBox,
-          { backgroundColor: colors.primaryContainer },
-        ]}>
+        style={[styles.logoBox, { backgroundColor: colors.primaryContainer }]}
+      >
         <AppIcon name="routes" size={26} color={colors.onPrimaryContainer} />
       </View>
       <Text style={[typography.headlineMedium, styles.welcomeTitle]}>
@@ -40,7 +38,8 @@ function LoginHeader() {
           typography.bodyLarge,
           styles.welcomeSubtitle,
           { color: colors.onSurfaceVariant },
-        ]}>
+        ]}
+      >
         Sign in to continue to Expo Route Kit.
       </Text>
     </View>
@@ -53,8 +52,8 @@ export default function LoginScreen() {
   const { showSnackbar } = useSnackbar();
   const navigation = useNavigation();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState<string | undefined>();
   const [passwordError, setPasswordError] = useState<string | undefined>();
 
@@ -62,18 +61,18 @@ export default function LoginScreen() {
 
   usePreventRemove(hasUnsavedInput, ({ data }) => {
     const discard = () => {
-      setEmail('');
-      setPassword('');
+      setEmail("");
+      setPassword("");
       setEmailError(undefined);
       setPasswordError(undefined);
       navigation.dispatch(data.action);
     };
 
-    if (Platform.OS === 'web') {
+    if (Platform.OS === "web") {
       if (
-        typeof window !== 'undefined' &&
+        typeof window !== "undefined" &&
         window.confirm(
-          'Discard credentials?\nYou have unsaved input. Do you want to clear the form?'
+          "Discard credentials?\nYou have unsaved input. Do you want to clear the form?",
         )
       ) {
         discard();
@@ -82,12 +81,12 @@ export default function LoginScreen() {
     }
 
     Alert.alert(
-      'Discard credentials?',
-      'You have unsaved input. Do you want to clear the form?',
+      "Discard credentials?",
+      "You have unsaved input. Do you want to clear the form?",
       [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Discard', style: 'destructive', onPress: discard },
-      ]
+        { text: "Cancel", style: "cancel" },
+        { text: "Discard", style: "destructive", onPress: discard },
+      ],
     );
   });
 
@@ -108,14 +107,14 @@ export default function LoginScreen() {
   const handleSubmit = () => {
     let valid = true;
     if (email.trim().length === 0) {
-      setEmailError('Please enter your email');
+      setEmailError("Please enter your email");
       valid = false;
     } else {
       setEmailError(undefined);
     }
 
     if (password.length === 0) {
-      setPasswordError('Please enter your password');
+      setPasswordError("Please enter your password");
       valid = false;
     } else {
       setPasswordError(undefined);
@@ -127,13 +126,16 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView
-      style={[styles.safeArea, { backgroundColor: colors.surface }]}>
+      style={[styles.safeArea, { backgroundColor: colors.surface }]}
+    >
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        style={styles.flex}>
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={styles.flex}
+      >
         <ScrollView
           keyboardShouldPersistTaps="handled"
-          contentContainerStyle={styles.scrollContent}>
+          contentContainerStyle={styles.scrollContent}
+        >
           <View style={styles.formCard}>
             <LoginHeader />
             <View style={styles.spacer32} />
@@ -174,7 +176,7 @@ export default function LoginScreen() {
               label="Create account"
               variant="text"
               fullWidth
-              onPress={() => showSnackbar('Create account flow not configured')}
+              onPress={() => showSnackbar("Create account flow not configured")}
             />
           </View>
         </ScrollView>
@@ -192,24 +194,24 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 24,
     paddingVertical: 32,
   },
   formCard: {
-    width: '100%',
+    width: "100%",
     maxWidth: 400,
   },
   header: {
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
   },
   logoBox: {
     width: 52,
     height: 52,
     borderRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   welcomeTitle: {
     marginTop: 24,

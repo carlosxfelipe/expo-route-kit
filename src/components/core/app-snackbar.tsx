@@ -6,11 +6,11 @@ import React, {
   useMemo,
   useRef,
   useState,
-} from 'react';
-import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+} from "react";
+import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useAppTheme } from '@/theme';
+import { useAppTheme } from "@/theme";
 
 interface SnackbarContextValue {
   showSnackbar: (message: string, durationMs?: number) => void;
@@ -61,7 +61,7 @@ export function SnackbarProvider({ children }: { children: React.ReactNode }) {
         hideSnackbar();
       }, durationMs);
     },
-    [clearTimer, hideSnackbar, opacity]
+    [clearTimer, hideSnackbar, opacity],
   );
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export function SnackbarProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo<SnackbarContextValue>(
     () => ({ showSnackbar, hideSnackbar }),
-    [showSnackbar, hideSnackbar]
+    [showSnackbar, hideSnackbar],
   );
 
   return (
@@ -86,7 +86,8 @@ export function SnackbarProvider({ children }: { children: React.ReactNode }) {
                 bottom: Math.max(insets.bottom, 16) + 72,
                 opacity,
               },
-            ]}>
+            ]}
+          >
             <Pressable
               onPress={hideSnackbar}
               style={[
@@ -95,12 +96,14 @@ export function SnackbarProvider({ children }: { children: React.ReactNode }) {
                   backgroundColor: colors.inverseSurface,
                   shadowColor: colors.shadow,
                 },
-              ]}>
+              ]}
+            >
               <Text
                 style={[
                   typography.bodyMedium,
                   { color: colors.onInverseSurface },
-                ]}>
+                ]}
+              >
                 {message}
               </Text>
             </Pressable>
@@ -114,7 +117,7 @@ export function SnackbarProvider({ children }: { children: React.ReactNode }) {
 export function useSnackbar(): SnackbarContextValue {
   const context = useContext(SnackbarContext);
   if (!context) {
-    throw new Error('useSnackbar must be used within a SnackbarProvider');
+    throw new Error("useSnackbar must be used within a SnackbarProvider");
   }
   return context;
 }
@@ -124,14 +127,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    position: 'absolute',
+    position: "absolute",
     left: 16,
     right: 16,
-    alignItems: 'center',
+    alignItems: "center",
     zIndex: 1000,
   },
   snack: {
-    width: '100%',
+    width: "100%",
     maxWidth: 520,
     borderRadius: 10,
     paddingHorizontal: 16,

@@ -1,10 +1,10 @@
-import { Tabs } from 'expo-router/js-tabs';
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Tabs } from "expo-router/js-tabs";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { AppIcon, type AppIconName } from '@/components/core';
-import { useAppTheme } from '@/theme';
+import { AppIcon, type AppIconName } from "@/components/core";
+import { useAppTheme } from "@/theme";
 
 function TabBarIcon({
   focused,
@@ -22,9 +22,10 @@ function TabBarIcon({
       style={[
         styles.pill,
         {
-          backgroundColor: focused ? colors.secondaryContainer : 'transparent',
+          backgroundColor: focused ? colors.secondaryContainer : "transparent",
         },
-      ]}>
+      ]}
+    >
       <AppIcon
         name={focused ? activeIcon : inactiveIcon}
         size={22}
@@ -53,11 +54,12 @@ export default function MainShellLayout() {
           paddingTop: 8,
           paddingBottom: Math.max(insets.bottom, 8),
         },
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: "Home",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon
               focused={focused}
@@ -70,7 +72,7 @@ export default function MainShellLayout() {
       <Tabs.Screen
         name="explore"
         options={{
-          title: 'Explore',
+          title: "Explore",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon
               focused={focused}
@@ -83,7 +85,7 @@ export default function MainShellLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          title: "Profile",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon
               focused={focused}
@@ -102,12 +104,12 @@ const styles = StyleSheet.create({
     width: 56,
     height: 30,
     borderRadius: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   label: {
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: "600",
     marginTop: 2,
   },
 });

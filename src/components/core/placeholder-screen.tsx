@@ -1,9 +1,9 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 
-import { useAppTheme } from '@/theme';
+import { useAppTheme } from "@/theme";
 
-import { AppHeader } from './app-header';
+import { AppHeader } from "./app-header";
 
 export interface PlaceholderScreenProps {
   title: string;
@@ -25,7 +25,8 @@ export function PlaceholderScreen({
             typography.headlineSmall,
             styles.title,
             { color: colors.onSurface },
-          ]}>
+          ]}
+        >
           {title}
         </Text>
         <Text
@@ -33,7 +34,8 @@ export function PlaceholderScreen({
             typography.bodyMedium,
             styles.description,
             { color: colors.onSurfaceVariant },
-          ]}>
+          ]}
+        >
           {description}
         </Text>
       </View>
@@ -47,15 +49,15 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     padding: 24,
   },
   title: {
-    textAlign: 'center',
+    textAlign: "center",
   },
   description: {
     marginTop: 8,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });

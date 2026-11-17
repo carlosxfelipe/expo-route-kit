@@ -1,16 +1,16 @@
-import { Image, type ImageSource } from 'expo-image';
-import React from 'react';
+import { Image, type ImageSource } from "expo-image";
+import React from "react";
 import {
   StyleSheet,
   Text,
   View,
   type StyleProp,
   type ViewStyle,
-} from 'react-native';
+} from "react-native";
 
-import { useAppTheme } from '@/theme';
+import { useAppTheme } from "@/theme";
 
-import { AppIcon } from './app-icon';
+import { AppIcon } from "./app-icon";
 
 export interface AppAvatarProps {
   name?: string;
@@ -23,12 +23,12 @@ export interface AppAvatarProps {
 }
 
 function extractInitials(rawName?: string): string {
-  if (!rawName) return '';
+  if (!rawName) return "";
   const parts = rawName
     .trim()
     .split(/\s+/)
     .filter((part) => part.length > 0);
-  if (parts.length === 0) return '';
+  if (parts.length === 0) return "";
   if (parts.length === 1) {
     return parts[0].slice(0, 1).toUpperCase();
   }
@@ -62,7 +62,8 @@ export function AppAvatar({
             borderRadius: radius,
             backgroundColor: bgColor,
           },
-        ]}>
+        ]}
+      >
         {image ? (
           <Image
             source={image}
@@ -73,9 +74,10 @@ export function AppAvatar({
           <Text
             style={{
               fontSize: radius * 0.72,
-              fontWeight: '600',
+              fontWeight: "600",
               color: fgColor,
-            }}>
+            }}
+          >
             {initials}
           </Text>
         ) : (
@@ -102,12 +104,12 @@ export function AppAvatar({
 
 const styles = StyleSheet.create({
   circle: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
   },
   badge: {
-    position: 'absolute',
+    position: "absolute",
     right: 0,
     bottom: 0,
     borderWidth: 2,

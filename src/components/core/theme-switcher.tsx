@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import { type ThemeMode, useThemeMode } from '@/theme';
+import { type ThemeMode, useThemeMode } from "@/theme";
 
 import {
   AppSegmentedSwitcher,
   type SegmentedSwitcherOption,
-} from './app-segmented-switcher';
+} from "./app-segmented-switcher";
 
 export interface ThemeSwitcherProps {
   selectedMode?: ThemeMode;
@@ -14,19 +14,19 @@ export interface ThemeSwitcherProps {
 
 const THEME_OPTIONS: readonly SegmentedSwitcherOption<ThemeMode>[] = [
   {
-    value: 'light',
-    label: 'Light',
-    icon: 'white-balance-sunny',
+    value: "light",
+    label: "Light",
+    icon: "white-balance-sunny",
   },
   {
-    value: 'dark',
-    label: 'Dark',
-    icon: 'weather-night',
+    value: "dark",
+    label: "Dark",
+    icon: "weather-night",
   },
   {
-    value: 'system',
-    label: 'System',
-    icon: 'brightness-auto',
+    value: "system",
+    label: "System",
+    icon: "brightness-auto",
   },
 ];
 

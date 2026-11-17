@@ -1,9 +1,9 @@
-import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { useAppTheme } from '@/theme';
+import { useAppTheme } from "@/theme";
 
-import { AppIcon, type AppIconName } from './app-icon';
+import { AppIcon, type AppIconName } from "./app-icon";
 
 export interface HeaderActionsProps {
   actions?: React.ReactNode;
@@ -50,18 +50,18 @@ export function HeaderActions({
           style={({ pressed }) => [
             styles.iconButton,
             pressed && { backgroundColor: colors.surfaceContainerHighest },
-          ]}>
+          ]}
+        >
           <View style={styles.iconWrapper}>
             <AppIcon name={rightIcon} size={24} color={colors.onSurface} />
             {badgeLabel !== null ? (
               <View
-                style={[
-                  styles.countBadge,
-                  { backgroundColor: colors.error },
-                ]}>
+                style={[styles.countBadge, { backgroundColor: colors.error }]}
+              >
                 <Text
                   style={[styles.countBadgeText, { color: colors.onError }]}
-                  numberOfLines={1}>
+                  numberOfLines={1}
+                >
                   {badgeLabel}
                 </Text>
               </View>
@@ -79,40 +79,40 @@ export function HeaderActions({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 4,
   },
   iconButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   iconWrapper: {
-    position: 'relative',
-    alignItems: 'center',
-    justifyContent: 'center',
+    position: "relative",
+    alignItems: "center",
+    justifyContent: "center",
   },
   countBadge: {
-    position: 'absolute',
+    position: "absolute",
     top: -6,
     right: -8,
     minWidth: 16,
     height: 16,
     paddingHorizontal: 4,
     borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   countBadgeText: {
     fontSize: 10,
-    fontWeight: '700',
+    fontWeight: "700",
     lineHeight: 12,
   },
   dotBadge: {
-    position: 'absolute',
+    position: "absolute",
     top: -2,
     right: -2,
     width: 8,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Pressable,
   StyleSheet,
@@ -6,11 +6,11 @@ import {
   View,
   type StyleProp,
   type ViewStyle,
-} from 'react-native';
+} from "react-native";
 
-import { useAppTheme } from '@/theme';
+import { useAppTheme } from "@/theme";
 
-import { AppIcon, type AppIconName } from './app-icon';
+import { AppIcon, type AppIconName } from "./app-icon";
 
 export interface SegmentedSwitcherOption<T extends string> {
   value: T;
@@ -42,7 +42,8 @@ export function AppSegmentedSwitcher<T extends string>({
           borderColor: colors.outline,
         },
         style,
-      ]}>
+      ]}
+    >
       {options.map((option, index) => {
         const isSelected = option.value === selected;
         const textColor = isSelected
@@ -67,13 +68,15 @@ export function AppSegmentedSwitcher<T extends string>({
                   ? colors.secondaryContainer
                   : pressed
                     ? colors.surfaceContainerHigh
-                    : 'transparent',
+                    : "transparent",
               },
-            ]}>
+            ]}
+          >
             <AppIcon name={option.icon} size={18} color={textColor} />
             <Text
               numberOfLines={1}
-              style={[typography.labelLarge, { color: textColor }]}>
+              style={[typography.labelLarge, { color: textColor }]}
+            >
               {option.label}
             </Text>
           </Pressable>
@@ -85,17 +88,17 @@ export function AppSegmentedSwitcher<T extends string>({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    flexDirection: "row",
     borderWidth: 1,
     borderRadius: 999,
-    overflow: 'hidden',
+    overflow: "hidden",
     minHeight: 42,
   },
   segment: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     gap: 6,
     paddingHorizontal: 12,
     paddingVertical: 10,

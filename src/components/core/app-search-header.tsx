@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Pressable,
   StyleSheet,
@@ -6,13 +6,13 @@ import {
   View,
   type StyleProp,
   type ViewStyle,
-} from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useAppTheme } from '@/theme';
+import { useAppTheme } from "@/theme";
 
-import { AppIcon, type AppIconName } from './app-icon';
-import { HeaderActions } from './header-actions';
+import { AppIcon, type AppIconName } from "./app-icon";
+import { HeaderActions } from "./header-actions";
 
 export interface AppSearchHeaderProps {
   value?: string;
@@ -35,7 +35,7 @@ export interface AppSearchHeaderProps {
 
 export function AppSearchHeader({
   value,
-  hintText = 'Search...',
+  hintText = "Search...",
   onChanged,
   onSubmitted,
   onClear,
@@ -53,7 +53,7 @@ export function AppSearchHeader({
 }: AppSearchHeaderProps) {
   const { colors, typography } = useAppTheme();
   const insets = useSafeAreaInsets();
-  const [internalValue, setInternalValue] = useState('');
+  const [internalValue, setInternalValue] = useState("");
 
   const isControlled = value !== undefined;
   const currentValue = isControlled ? value : internalValue;
@@ -67,9 +67,9 @@ export function AppSearchHeader({
 
   const handleClear = () => {
     if (!isControlled) {
-      setInternalValue('');
+      setInternalValue("");
     }
-    onChanged?.('');
+    onChanged?.("");
     onClear?.();
   };
 
@@ -82,14 +82,16 @@ export function AppSearchHeader({
           backgroundColor: colors.surface,
         },
         style,
-      ]}>
+      ]}
+    >
       <View style={styles.toolbar}>
         {leading ? <View style={styles.leading}>{leading}</View> : null}
         <View
           style={[
             styles.searchBar,
             { backgroundColor: colors.surfaceContainerHigh },
-          ]}>
+          ]}
+        >
           <AppIcon name="magnify" size={20} color={colors.onSurfaceVariant} />
           <TextInput
             value={currentValue}
@@ -112,7 +114,8 @@ export function AppSearchHeader({
               hitSlop={8}
               accessibilityRole="button"
               accessibilityLabel="Clear"
-              style={styles.clearButton}>
+              style={styles.clearButton}
+            >
               <AppIcon name="close" size={18} color={colors.onSurfaceVariant} />
             </Pressable>
           ) : null}
@@ -133,12 +136,12 @@ export function AppSearchHeader({
 
 const styles = StyleSheet.create({
   wrapper: {
-    width: '100%',
+    width: "100%",
   },
   toolbar: {
     height: 64,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 12,
     gap: 8,
   },
@@ -149,15 +152,15 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 48,
     borderRadius: 24,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 14,
     gap: 10,
   },
   input: {
     flex: 1,
     paddingVertical: 8,
-    outlineStyle: 'none' as never,
+    outlineStyle: "none" as never,
   },
   clearButton: {
     padding: 4,

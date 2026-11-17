@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Pressable,
   StyleSheet,
@@ -10,11 +10,11 @@ import {
   type StyleProp,
   type TextInputProps,
   type ViewStyle,
-} from 'react-native';
+} from "react-native";
 
-import { useAppTheme } from '@/theme';
+import { useAppTheme } from "@/theme";
 
-import { AppIcon, type AppIconName } from './app-icon';
+import { AppIcon, type AppIconName } from "./app-icon";
 
 export interface AppTextFieldProps {
   value?: string;
@@ -27,8 +27,8 @@ export interface AppTextFieldProps {
   enableVisibilityToggle?: boolean;
   keyboardType?: KeyboardTypeOptions;
   returnKeyType?: ReturnKeyTypeOptions;
-  autoComplete?: TextInputProps['autoComplete'];
-  autoCapitalize?: TextInputProps['autoCapitalize'];
+  autoComplete?: TextInputProps["autoComplete"];
+  autoCapitalize?: TextInputProps["autoCapitalize"];
   errorText?: string;
   onSubmitEditing?: () => void;
   enabled?: boolean;
@@ -82,10 +82,11 @@ export function AppTextField({
         onPress={() => setIsObscured((prev) => !prev)}
         hitSlop={8}
         accessibilityRole="button"
-        accessibilityLabel={isObscured ? 'Show password' : 'Hide password'}
-        style={styles.toggleButton}>
+        accessibilityLabel={isObscured ? "Show password" : "Hide password"}
+        style={styles.toggleButton}
+      >
         <AppIcon
-          name={isObscured ? 'eye-outline' : 'eye-off-outline'}
+          name={isObscured ? "eye-outline" : "eye-off-outline"}
           size={20}
           color={colors.onSurfaceVariant}
         />
@@ -105,7 +106,8 @@ export function AppTextField({
                 ? colors.primary
                 : colors.onSurfaceVariant,
           },
-        ]}>
+        ]}
+      >
         {label}
       </Text>
       <View
@@ -118,7 +120,8 @@ export function AppTextField({
             backgroundColor: colors.surfaceContainerLow,
             opacity: enabled ? 1 : 0.6,
           },
-        ]}>
+        ]}
+      >
         {prefixIcon ? (
           <View style={styles.prefix}>
             <AppIcon
@@ -146,7 +149,7 @@ export function AppTextField({
           keyboardType={keyboardType}
           returnKeyType={returnKeyType}
           autoComplete={autoComplete}
-          autoCapitalize={autoCapitalize ?? (obscureText ? 'none' : undefined)}
+          autoCapitalize={autoCapitalize ?? (obscureText ? "none" : undefined)}
           onSubmitEditing={onSubmitEditing}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
@@ -163,7 +166,13 @@ export function AppTextField({
         ) : null}
       </View>
       {hasError ? (
-        <Text style={[typography.bodySmall, styles.errorText, { color: colors.error }]}>
+        <Text
+          style={[
+            typography.bodySmall,
+            styles.errorText,
+            { color: colors.error },
+          ]}
+        >
           {errorText}
         </Text>
       ) : null}
@@ -173,15 +182,15 @@ export function AppTextField({
 
 const styles = StyleSheet.create({
   wrapper: {
-    width: '100%',
+    width: "100%",
   },
   label: {
     marginBottom: 6,
     marginLeft: 2,
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     minHeight: 52,
     paddingHorizontal: 14,
   },
@@ -191,11 +200,11 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     paddingVertical: 12,
-    outlineStyle: 'none' as never,
+    outlineStyle: "none" as never,
   },
   multilineInput: {
     minHeight: 96,
-    textAlignVertical: 'top',
+    textAlignVertical: "top",
   },
   suffix: {
     marginLeft: 8,

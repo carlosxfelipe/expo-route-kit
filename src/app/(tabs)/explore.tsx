@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import React, { useEffect, useRef, useState } from "react";
+import { ScrollView, StyleSheet, Switch, Text, View } from "react-native";
 
 import {
   AppAvatar,
@@ -14,23 +14,27 @@ import {
   AppTextField,
   type SegmentedSwitcherOption,
   useSnackbar,
-} from '@/components/core';
-import { useAppTheme } from '@/theme';
+} from "@/components/core";
+import { useAppTheme } from "@/theme";
 
-const VIEW_OPTIONS: readonly SegmentedSwitcherOption<'Day' | 'Week' | 'Month'>[] = [
-  { value: 'Day', label: 'Day', icon: 'calendar-today-outline' },
-  { value: 'Week', label: 'Week', icon: 'view-week-outline' },
-  { value: 'Month', label: 'Month', icon: 'calendar-month-outline' },
+const VIEW_OPTIONS: readonly SegmentedSwitcherOption<
+  "Day" | "Week" | "Month"
+>[] = [
+  { value: "Day", label: "Day", icon: "calendar-today-outline" },
+  { value: "Week", label: "Week", icon: "view-week-outline" },
+  { value: "Month", label: "Month", icon: "calendar-month-outline" },
 ];
 
-const LAYOUT_OPTIONS: readonly SegmentedSwitcherOption<'List' | 'Grid'>[] = [
-  { value: 'List', label: 'List', icon: 'view-list-outline' },
-  { value: 'Grid', label: 'Grid', icon: 'view-grid-outline' },
+const LAYOUT_OPTIONS: readonly SegmentedSwitcherOption<"List" | "Grid">[] = [
+  { value: "List", label: "List", icon: "view-list-outline" },
+  { value: "Grid", label: "Grid", icon: "view-grid-outline" },
 ];
 
 function SectionTitle({ title }: { title: string }) {
   const { typography } = useAppTheme();
-  return <Text style={[typography.titleMedium, styles.sectionTitle]}>{title}</Text>;
+  return (
+    <Text style={[typography.titleMedium, styles.sectionTitle]}>{title}</Text>
+  );
 }
 
 export default function ExploreScreen() {
@@ -39,12 +43,14 @@ export default function ExploreScreen() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [sheetVisible, setSheetVisible] = useState(false);
-  const [selectedView, setSelectedView] = useState<'Day' | 'Week' | 'Month'>('Day');
-  const [selectedLayout, setSelectedLayout] = useState<'List' | 'Grid'>('List');
+  const [selectedView, setSelectedView] = useState<"Day" | "Week" | "Month">(
+    "Day",
+  );
+  const [selectedLayout, setSelectedLayout] = useState<"List" | "Grid">("List");
 
   const loadingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -70,7 +76,8 @@ export default function ExploreScreen() {
       <ScrollView
         contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         <SectionTitle title="AppButton Variants" />
         <View style={styles.wrapRow}>
           <AppButton label="Filled" onPress={() => {}} />
@@ -111,7 +118,8 @@ export default function ExploreScreen() {
           style={[
             styles.searchContainer,
             { borderColor: colors.outlineVariant },
-          ]}>
+          ]}
+        >
           <AppSearchHeader
             value={searchQuery}
             hintText="Try searching..."
@@ -124,7 +132,8 @@ export default function ExploreScreen() {
               typography.bodySmall,
               styles.helperText,
               { color: colors.onSurfaceVariant },
-            ]}>
+            ]}
+          >
             {`Query: "${searchQuery}"`}
           </Text>
         ) : null}
@@ -135,7 +144,7 @@ export default function ExploreScreen() {
           icon="palette-outline"
           title="Theme & Appearance"
           subtitle="Default card with icon and chevron"
-          onPress={() => showSnackbar('AppListCard tapped')}
+          onPress={() => showSnackbar("AppListCard tapped")}
         />
         <AppListCard
           icon="bell-ring-outline"
@@ -171,7 +180,7 @@ export default function ExploreScreen() {
               label="Learn more"
               variant="outlined"
               rightIcon="arrow-right"
-              onPress={() => showSnackbar('AppBannerCard action')}
+              onPress={() => showSnackbar("AppBannerCard action")}
             />
           }
         />
@@ -184,7 +193,7 @@ export default function ExploreScreen() {
           description="Use AppEmptyState for empty lists, search results, or offline views."
           actionLabel="Create item"
           actionIcon="plus"
-          onActionPress={() => showSnackbar('AppEmptyState action')}
+          onActionPress={() => showSnackbar("AppEmptyState action")}
         />
 
         <View style={styles.sectionGap} />
@@ -237,7 +246,8 @@ export default function ExploreScreen() {
             typography.bodySmall,
             styles.helperText,
             { color: colors.onSurfaceVariant },
-          ]}>
+          ]}
+        >
           {`Selected view: ${selectedView}`}
         </Text>
 
@@ -252,7 +262,8 @@ export default function ExploreScreen() {
             typography.bodySmall,
             styles.helperText,
             { color: colors.onSurfaceVariant },
-          ]}>
+          ]}
+        >
           {`Selected layout: ${selectedLayout}`}
         </Text>
       </ScrollView>
@@ -260,7 +271,8 @@ export default function ExploreScreen() {
       <AppBottomSheet
         visible={sheetVisible}
         onClose={() => setSheetVisible(false)}
-        title="Quick Actions">
+        title="Quick Actions"
+      >
         <AppListCard
           icon="share-variant-outline"
           title="Share link"
@@ -299,21 +311,21 @@ const styles = StyleSheet.create({
     height: 16,
   },
   wrapRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     gap: 12,
   },
   searchContainer: {
     borderWidth: 1,
     borderRadius: 12,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   helperText: {
     marginTop: 8,
   },
   avatarRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 12,
   },
 });

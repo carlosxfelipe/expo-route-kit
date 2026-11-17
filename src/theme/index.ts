@@ -5,11 +5,11 @@ export {
   DeepPurpleDarkTheme,
   DeepPurpleLightTheme,
   toNavigationTheme,
-} from './deep-purple-theme';
+} from "./deep-purple-theme";
 export {
   AppThemeProvider,
   THEME_MODE_LABELS,
   type ThemeMode,
   useAppTheme,
   useThemeMode,
-} from './theme-mode';
+} from "./theme-mode";

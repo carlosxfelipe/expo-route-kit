@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Pressable,
   StyleSheet,
@@ -6,11 +6,11 @@ import {
   View,
   type StyleProp,
   type ViewStyle,
-} from 'react-native';
+} from "react-native";
 
-import { useAppTheme } from '@/theme';
+import { useAppTheme } from "@/theme";
 
-import { AppIcon, type AppIconName } from './app-icon';
+import { AppIcon, type AppIconName } from "./app-icon";
 
 export interface AppBannerCardProps {
   title: string;
@@ -44,21 +44,19 @@ export function AppBannerCard({
   const inner = (
     <View style={{ padding }}>
       {icon ? (
-        <AppIcon
-          name={icon}
-          size={24}
-          color={resolvedFg}
-          style={styles.icon}
-        />
+        <AppIcon name={icon} size={24} color={resolvedFg} style={styles.icon} />
       ) : null}
-      <Text style={[typography.titleLarge, { color: resolvedFg }]}>{title}</Text>
+      <Text style={[typography.titleLarge, { color: resolvedFg }]}>
+        {title}
+      </Text>
       {description ? (
         <Text
           style={[
             typography.bodyMedium,
             styles.description,
             { color: resolvedFg },
-          ]}>
+          ]}
+        >
           {description}
         </Text>
       ) : null}
@@ -79,7 +77,8 @@ export function AppBannerCard({
             opacity: pressed ? 0.9 : 1,
           },
           style,
-        ]}>
+        ]}
+      >
         {inner}
       </Pressable>
     );
@@ -91,7 +90,8 @@ export function AppBannerCard({
         styles.card,
         { backgroundColor: resolvedBg, borderRadius },
         style,
-      ]}>
+      ]}
+    >
       {inner}
     </View>
   );
@@ -99,7 +99,7 @@ export function AppBannerCard({
 
 const styles = StyleSheet.create({
   card: {
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   icon: {
     marginBottom: 12,
