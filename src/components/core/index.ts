@@ -26,4 +26,9 @@ export {
   PlaceholderScreen,
   type PlaceholderScreenProps,
 } from "./placeholder-screen";
-export { ThemeSwitcher, type ThemeSwitcherProps } from "./theme-switcher";
+export {
+  ThemePresetSwitcher,
+  type ThemePresetSwitcherProps,
+  ThemeSwitcher,
+  type ThemeSwitcherProps,
+} from "./theme-switcher";

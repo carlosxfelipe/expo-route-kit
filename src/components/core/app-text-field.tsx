@@ -67,6 +67,7 @@ export function AppTextField({
     setIsObscured(obscureText);
   }, [obscureText]);
 
+  const isMultiline = multiline && !isObscured;
   const hasError = Boolean(errorText);
   const borderColor = hasError
     ? colors.error
@@ -144,8 +145,8 @@ export function AppTextField({
           placeholderTextColor={colors.onSurfaceVariant}
           secureTextEntry={isObscured}
           editable={enabled}
-          multiline={isObscured ? false : multiline}
-          numberOfLines={isObscured ? 1 : numberOfLines}
+          multiline={isMultiline}
+          numberOfLines={isMultiline ? numberOfLines : 1}
           keyboardType={keyboardType}
           returnKeyType={returnKeyType}
           autoComplete={autoComplete}
@@ -158,7 +159,7 @@ export function AppTextField({
             typography.bodyLarge,
             styles.input,
             { color: colors.onSurface },
-            multiline && !isObscured ? styles.multilineInput : undefined,
+            isMultiline ? styles.multilineInput : styles.singleLineInput,
           ]}
         />
         {effectiveSuffix ? (
@@ -199,11 +200,18 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    paddingVertical: 12,
     outlineStyle: "none" as never,
+  },
+  singleLineInput: {
+    height: 50,
+    lineHeight: undefined,
+    paddingVertical: 0,
+    textAlignVertical: "center",
+    includeFontPadding: false,
   },
   multilineInput: {
     minHeight: 96,
+    paddingVertical: 12,
     textAlignVertical: "top",
   },
   suffix: {

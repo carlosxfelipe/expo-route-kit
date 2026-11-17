@@ -159,7 +159,11 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    paddingVertical: 8,
+    height: 48,
+    lineHeight: undefined,
+    paddingVertical: 0,
+    textAlignVertical: "center",
+    includeFontPadding: false,
     outlineStyle: "none" as never,
   },
   clearButton: {

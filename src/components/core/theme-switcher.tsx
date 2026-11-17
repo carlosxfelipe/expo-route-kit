@@ -1,6 +1,6 @@
 import React from "react";
 
-import { type ThemeMode, useThemeMode } from "@/theme";
+import { type AppThemePreset, type ThemeMode, useThemeMode } from "@/theme";
 
 import {
   AppSegmentedSwitcher,
@@ -38,6 +38,39 @@ export function ThemeSwitcher({ selectedMode, onChanged }: ThemeSwitcherProps) {
       options={THEME_OPTIONS}
       selected={selectedMode ?? themeMode}
       onChanged={onChanged ?? setThemeMode}
+    />
+  );
+}
+
+export interface ThemePresetSwitcherProps {
+  selectedPreset?: AppThemePreset;
+  onChanged?: (preset: AppThemePreset) => void;
+}
+
+const PRESET_OPTIONS: readonly SegmentedSwitcherOption<AppThemePreset>[] = [
+  {
+    value: "deep_purple",
+    label: "Deep Purple",
+    icon: "palette-outline",
+  },
+  {
+    value: "custom_blue",
+    label: "Custom Blue",
+    icon: "water-outline",
+  },
+];
+
+export function ThemePresetSwitcher({
+  selectedPreset,
+  onChanged,
+}: ThemePresetSwitcherProps) {
+  const { themePreset, setThemePreset } = useThemeMode();
+
+  return (
+    <AppSegmentedSwitcher<AppThemePreset>
+      options={PRESET_OPTIONS}
+      selected={selectedPreset ?? themePreset}
+      onChanged={onChanged ?? setThemePreset}
     />
   );
 }

@@ -10,10 +10,16 @@ import {
   AppHeader,
   type AppIconName,
   AppListCard,
+  ThemePresetSwitcher,
   ThemeSwitcher,
   useSnackbar,
 } from "@/components/core";
-import { THEME_MODE_LABELS, useAppTheme, useThemeMode } from "@/theme";
+import {
+  THEME_MODE_LABELS,
+  THEME_PRESET_LABELS,
+  useAppTheme,
+  useThemeMode,
+} from "@/theme";
 
 interface ShortcutItem {
   icon: AppIconName;
@@ -39,7 +45,7 @@ const SHORTCUTS: readonly ShortcutItem[] = [
 
 export default function HomeScreen() {
   const { colors, typography } = useAppTheme();
-  const { themeMode } = useThemeMode();
+  const { themeMode, themePreset } = useThemeMode();
   const { signOut } = useAuthSession();
   const { showSnackbar } = useSnackbar();
   const router = useRouter();
@@ -91,7 +97,7 @@ export default function HomeScreen() {
         <AppListCard
           icon="cog-outline"
           title="Appearance"
-          subtitle={`Theme: ${THEME_MODE_LABELS[themeMode]}`}
+          subtitle={`Theme: ${THEME_MODE_LABELS[themeMode]} · ${THEME_PRESET_LABELS[themePreset]}`}
           onPress={() => setAppearanceSheetVisible(true)}
         />
       </ScrollView>
@@ -105,6 +111,10 @@ export default function HomeScreen() {
           App theme
         </Text>
         <ThemeSwitcher />
+        <Text style={[typography.titleMedium, styles.sheetPresetLabel]}>
+          Color palette
+        </Text>
+        <ThemePresetSwitcher />
       </AppBottomSheet>
 
       <AppBottomSheet
@@ -160,6 +170,10 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   sheetLabel: {
+    marginBottom: 12,
+  },
+  sheetPresetLabel: {
+    marginTop: 18,
     marginBottom: 12,
   },
   logoutMessage: {

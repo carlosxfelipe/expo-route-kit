@@ -1,11 +1,9 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 import { useColorScheme } from "react-native";
 
-import {
-  type AppThemeData,
-  DeepPurpleDarkTheme,
-  DeepPurpleLightTheme,
-} from "./deep-purple-theme";
+import { CustomBlueTheme } from "./custom-blue-theme";
+import { DeepPurpleTheme } from "./deep-purple-theme";
+import type { AppThemeData, AppThemePair, AppThemePreset } from "./theme-types";
 
 export type ThemeMode = "light" | "dark" | "system";
 
@@ -15,9 +13,24 @@ export const THEME_MODE_LABELS: Record<ThemeMode, string> = {
   system: "System",
 };
 
+export const THEME_PRESET_LABELS: Record<AppThemePreset, string> = {
+  deep_purple: "Deep Purple",
+  custom_blue: "Custom Blue",
+};
+
+// Swap the default active theme preset here ('deep_purple' | 'custom_blue').
+export const DEFAULT_THEME_PRESET: AppThemePreset = "custom_blue";
+
+const THEME_PRESETS: Record<AppThemePreset, AppThemePair> = {
+  deep_purple: DeepPurpleTheme,
+  custom_blue: CustomBlueTheme,
+};
+
 interface ThemeContextValue {
   themeMode: ThemeMode;
   setThemeMode: (mode: ThemeMode) => void;
+  themePreset: AppThemePreset;
+  setThemePreset: (preset: AppThemePreset) => void;
   resolvedScheme: "light" | "dark";
   isDark: boolean;
   theme: AppThemeData;
@@ -25,9 +38,16 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-export function AppThemeProvider({ children }: { children: React.ReactNode }) {
+export function AppThemeProvider({
+  children,
+  initialPreset = DEFAULT_THEME_PRESET,
+}: {
+  children: React.ReactNode;
+  initialPreset?: AppThemePreset;
+}) {
   const systemColorScheme = useColorScheme();
   const [themeMode, setThemeMode] = useState<ThemeMode>("system");
+  const [themePreset, setThemePreset] = useState<AppThemePreset>(initialPreset);
 
   const value = useMemo<ThemeContextValue>(() => {
     const resolvedScheme: "light" | "dark" =
@@ -37,16 +57,19 @@ export function AppThemeProvider({ children }: { children: React.ReactNode }) {
           : "light"
         : themeMode;
     const isDark = resolvedScheme === "dark";
-    const theme = isDark ? DeepPurpleDarkTheme : DeepPurpleLightTheme;
+    const pair = THEME_PRESETS[themePreset];
+    const theme = isDark ? pair.dark : pair.light;
 
     return {
       themeMode,
       setThemeMode,
+      themePreset,
+      setThemePreset,
       resolvedScheme,
       isDark,
       theme,
     };
-  }, [systemColorScheme, themeMode]);
+  }, [systemColorScheme, themeMode, themePreset]);
 
   return (
     <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
@@ -61,6 +84,8 @@ export function useThemeMode() {
   return {
     themeMode: context.themeMode,
     setThemeMode: context.setThemeMode,
+    themePreset: context.themePreset,
+    setThemePreset: context.setThemePreset,
     resolvedScheme: context.resolvedScheme,
     isDark: context.isDark,
   };
