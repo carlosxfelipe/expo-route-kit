@@ -1,0 +1,165 @@
+import React, { useState } from 'react';
+import {
+  Pressable,
+  StyleSheet,
+  TextInput,
+  View,
+  type StyleProp,
+  type ViewStyle,
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { useAppTheme } from '@/theme';
+
+import { AppIcon, type AppIconName } from './app-icon';
+import { HeaderActions } from './header-actions';
+
+export interface AppSearchHeaderProps {
+  value?: string;
+  hintText?: string;
+  onChanged?: (value: string) => void;
+  onSubmitted?: (value: string) => void;
+  onClear?: () => void;
+  autofocus?: boolean;
+  leading?: React.ReactNode;
+  rightIcon?: AppIconName;
+  onRightIconPress?: () => void;
+  rightIconTooltip?: string;
+  rightIconBadgeCount?: number;
+  rightIconBadgeMaxCount?: number;
+  showRightIconBadge?: boolean;
+  actions?: React.ReactNode;
+  safeAreaTop?: boolean;
+  style?: StyleProp<ViewStyle>;
+}
+
+export function AppSearchHeader({
+  value,
+  hintText = 'Search...',
+  onChanged,
+  onSubmitted,
+  onClear,
+  autofocus = false,
+  leading,
+  rightIcon,
+  onRightIconPress,
+  rightIconTooltip,
+  rightIconBadgeCount,
+  rightIconBadgeMaxCount = 9,
+  showRightIconBadge = false,
+  actions,
+  safeAreaTop = false,
+  style,
+}: AppSearchHeaderProps) {
+  const { colors, typography } = useAppTheme();
+  const insets = useSafeAreaInsets();
+  const [internalValue, setInternalValue] = useState('');
+
+  const isControlled = value !== undefined;
+  const currentValue = isControlled ? value : internalValue;
+
+  const handleChangeText = (next: string) => {
+    if (!isControlled) {
+      setInternalValue(next);
+    }
+    onChanged?.(next);
+  };
+
+  const handleClear = () => {
+    if (!isControlled) {
+      setInternalValue('');
+    }
+    onChanged?.('');
+    onClear?.();
+  };
+
+  return (
+    <View
+      style={[
+        styles.wrapper,
+        {
+          paddingTop: safeAreaTop ? insets.top : 0,
+          backgroundColor: colors.surface,
+        },
+        style,
+      ]}>
+      <View style={styles.toolbar}>
+        {leading ? <View style={styles.leading}>{leading}</View> : null}
+        <View
+          style={[
+            styles.searchBar,
+            { backgroundColor: colors.surfaceContainerHigh },
+          ]}>
+          <AppIcon name="magnify" size={20} color={colors.onSurfaceVariant} />
+          <TextInput
+            value={currentValue}
+            onChangeText={handleChangeText}
+            onSubmitEditing={() => onSubmitted?.(currentValue)}
+            placeholder={hintText}
+            placeholderTextColor={colors.onSurfaceVariant}
+            autoFocus={autofocus}
+            returnKeyType="search"
+            selectionColor={colors.primary}
+            style={[
+              typography.bodyLarge,
+              styles.input,
+              { color: colors.onSurface },
+            ]}
+          />
+          {currentValue.length > 0 ? (
+            <Pressable
+              onPress={handleClear}
+              hitSlop={8}
+              accessibilityRole="button"
+              accessibilityLabel="Clear"
+              style={styles.clearButton}>
+              <AppIcon name="close" size={18} color={colors.onSurfaceVariant} />
+            </Pressable>
+          ) : null}
+        </View>
+        <HeaderActions
+          actions={actions}
+          rightIcon={rightIcon}
+          onRightIconPress={onRightIconPress}
+          rightIconTooltip={rightIconTooltip}
+          rightIconBadgeCount={rightIconBadgeCount}
+          rightIconBadgeMaxCount={rightIconBadgeMaxCount}
+          showRightIconBadge={showRightIconBadge}
+        />
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  wrapper: {
+    width: '100%',
+  },
+  toolbar: {
+    height: 64,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    gap: 8,
+  },
+  leading: {
+    marginRight: 4,
+  },
+  searchBar: {
+    flex: 1,
+    height: 48,
+    borderRadius: 24,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 14,
+    gap: 10,
+  },
+  input: {
+    flex: 1,
+    paddingVertical: 8,
+    outlineStyle: 'none' as never,
+  },
+  clearButton: {
+    padding: 4,
+  },
+});
