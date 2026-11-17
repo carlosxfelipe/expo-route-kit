@@ -8,6 +8,7 @@ import {
   type ViewStyle,
 } from "react-native";
 
+import { testProps, viewTestProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 import { AppIcon, type AppIconName } from "./app-icon";
@@ -23,6 +24,8 @@ export interface AppBannerCardProps {
   onPress?: () => void;
   footer?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
+  testID?: string;
+  accessibilityLabel?: string;
 }
 
 export function AppBannerCard({
@@ -36,13 +39,15 @@ export function AppBannerCard({
   onPress,
   footer,
   style,
+  testID,
+  accessibilityLabel,
 }: AppBannerCardProps) {
   const { colors, typography } = useAppTheme();
   const resolvedBg = backgroundColor ?? colors.primaryContainer;
   const resolvedFg = foregroundColor ?? colors.onPrimaryContainer;
 
-  const inner = (
-    <View style={{ padding }}>
+  const body = (
+    <>
       {icon ? (
         <AppIcon name={icon} size={24} color={resolvedFg} style={styles.icon} />
       ) : null}
@@ -60,39 +65,67 @@ export function AppBannerCard({
           {description}
         </Text>
       ) : null}
-      {footer ? <View style={styles.footer}>{footer}</View> : null}
-    </View>
+    </>
   );
+
+  // When both onPress and footer are provided, keep footer outside Pressable
+  // so footer buttons remain independently accessible on iOS/Maestro.
+  if (onPress && footer) {
+    return (
+      <View
+        {...viewTestProps(testID ? `${testID}_container` : undefined)}
+        style={[
+          styles.card,
+          { backgroundColor: resolvedBg, borderRadius, padding },
+          style,
+        ]}
+      >
+        <Pressable
+          onPress={onPress}
+          accessibilityRole="button"
+          {...testProps(testID, accessibilityLabel ?? title)}
+          style={({ pressed }) => (pressed ? styles.pressed : undefined)}
+        >
+          {body}
+        </Pressable>
+        <View style={styles.footer}>{footer}</View>
+      </View>
+    );
+  }
 
   if (onPress) {
     return (
       <Pressable
         onPress={onPress}
         accessibilityRole="button"
+        {...testProps(testID, accessibilityLabel ?? title)}
         style={({ pressed }) => [
           styles.card,
           {
             backgroundColor: resolvedBg,
             borderRadius,
+            padding,
             opacity: pressed ? 0.9 : 1,
           },
           style,
         ]}
       >
-        {inner}
+        {body}
       </Pressable>
     );
   }
 
   return (
     <View
+      {...viewTestProps(testID)}
       style={[
         styles.card,
-        { backgroundColor: resolvedBg, borderRadius },
+        { backgroundColor: resolvedBg, borderRadius, padding },
         style,
       ]}
     >
-      {inner}
+      {body}
+      {footer ? <View style={styles.footer}>{footer}</View> : null}
     </View>
   );
 }
@@ -100,6 +133,9 @@ export function AppBannerCard({
 const styles = StyleSheet.create({
   card: {
     overflow: "hidden",
+  },
+  pressed: {
+    opacity: 0.9,
   },
   icon: {
     marginBottom: 12,

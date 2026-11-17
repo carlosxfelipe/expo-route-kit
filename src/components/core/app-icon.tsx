@@ -5,6 +5,8 @@ import {
 import React from "react";
 import type { StyleProp, TextStyle } from "react-native";
 
+import { testProps } from "@/constants/test-ids";
+
 export type AppIconName = MaterialDesignIconsIconName;
 
 export interface AppIconProps {
@@ -12,10 +14,25 @@ export interface AppIconProps {
   size?: number;
   color?: string;
   style?: StyleProp<TextStyle>;
+  testID?: string;
+  accessibilityLabel?: string;
 }
 
-export function AppIcon({ name, size = 24, color, style }: AppIconProps) {
+export function AppIcon({
+  name,
+  size = 24,
+  color,
+  style,
+  testID,
+  accessibilityLabel,
+}: AppIconProps) {
   return (
-    <MaterialDesignIcons name={name} size={size} color={color} style={style} />
+    <MaterialDesignIcons
+      name={name}
+      size={size}
+      color={color}
+      style={style}
+      {...testProps(testID, accessibilityLabel)}
+    />
   );
 }

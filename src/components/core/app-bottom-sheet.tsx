@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { testProps, viewTestProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 import { AppIcon } from "./app-icon";
@@ -24,6 +25,7 @@ export interface AppBottomSheetProps {
   title?: string;
   showDragHandle?: boolean;
   children: React.ReactNode;
+  testID?: string;
 }
 
 export function AppBottomSheet({
@@ -32,6 +34,7 @@ export function AppBottomSheet({
   title,
   showDragHandle = true,
   children,
+  testID,
 }: AppBottomSheetProps) {
   const { colors, typography } = useAppTheme();
   const insets = useSafeAreaInsets();
@@ -136,11 +139,15 @@ export function AppBottomSheet({
           <Pressable
             style={styles.backdropPressable}
             onPress={onClose}
-            accessibilityLabel="Close sheet"
+            {...testProps(
+              testID ? `${testID}_backdrop` : undefined,
+              "Close sheet",
+            )}
           />
         </Animated.View>
 
         <Animated.View
+          {...viewTestProps(testID)}
           style={[
             styles.sheet,
             {
@@ -168,6 +175,7 @@ export function AppBottomSheet({
             {title ? (
               <View style={styles.headerRow}>
                 <Text
+                  {...testProps(testID ? `${testID}_title` : undefined, title)}
                   style={[
                     typography.titleLarge,
                     styles.title,
@@ -180,7 +188,10 @@ export function AppBottomSheet({
                   onPress={onClose}
                   hitSlop={8}
                   accessibilityRole="button"
-                  accessibilityLabel="Close"
+                  {...testProps(
+                    testID ? `${testID}_close` : undefined,
+                    "Close",
+                  )}
                   style={({ pressed }) => [
                     styles.closeButton,
                     pressed && {

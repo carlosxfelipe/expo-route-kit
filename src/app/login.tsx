@@ -18,6 +18,7 @@ import {
   AppTextField,
   useSnackbar,
 } from "@/components/core";
+import { testIds, testProps, viewTestProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 function LoginHeader() {
@@ -30,10 +31,17 @@ function LoginHeader() {
       >
         <AppIcon name="routes" size={26} color={colors.onPrimaryContainer} />
       </View>
-      <Text style={[typography.headlineMedium, styles.welcomeTitle]}>
+      <Text
+        {...testProps(testIds.login.title, "Welcome back")}
+        style={[typography.headlineMedium, styles.welcomeTitle]}
+      >
         Welcome back
       </Text>
       <Text
+        {...testProps(
+          testIds.login.subtitle,
+          "Sign in to continue to Expo Route Kit.",
+        )}
         style={[
           typography.bodyLarge,
           styles.welcomeSubtitle,
@@ -126,6 +134,7 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView
+      {...viewTestProps(testIds.login.screen)}
       style={[styles.safeArea, { backgroundColor: colors.surface }]}
     >
       <KeyboardAvoidingView
@@ -133,6 +142,7 @@ export default function LoginScreen() {
         style={styles.flex}
       >
         <ScrollView
+          {...viewTestProps(testIds.login.scroll)}
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={styles.scrollContent}
         >
@@ -149,6 +159,7 @@ export default function LoginScreen() {
               autoComplete="email"
               autoCapitalize="none"
               errorText={emailError}
+              testID={testIds.login.emailInput}
             />
             <View style={styles.spacer16} />
             <AppTextField
@@ -162,6 +173,7 @@ export default function LoginScreen() {
               autoComplete="password"
               errorText={passwordError}
               onSubmitEditing={handleSubmit}
+              testID={testIds.login.passwordInput}
             />
             <View style={styles.spacer24} />
             <AppButton
@@ -170,6 +182,7 @@ export default function LoginScreen() {
               fullWidth
               height={52}
               onPress={handleSubmit}
+              testID={testIds.login.signInButton}
             />
             <View style={styles.spacer12} />
             <AppButton
@@ -177,6 +190,7 @@ export default function LoginScreen() {
               variant="text"
               fullWidth
               onPress={() => showSnackbar("Create account flow not configured")}
+              testID={testIds.login.createAccountButton}
             />
           </View>
         </ScrollView>

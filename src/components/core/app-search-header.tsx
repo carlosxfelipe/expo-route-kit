@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { testProps, viewTestProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 import { AppIcon, type AppIconName } from "./app-icon";
@@ -31,6 +32,8 @@ export interface AppSearchHeaderProps {
   actions?: React.ReactNode;
   safeAreaTop?: boolean;
   style?: StyleProp<ViewStyle>;
+  testID?: string;
+  rightIconTestID?: string;
 }
 
 export function AppSearchHeader({
@@ -50,6 +53,8 @@ export function AppSearchHeader({
   actions,
   safeAreaTop = false,
   style,
+  testID,
+  rightIconTestID,
 }: AppSearchHeaderProps) {
   const { colors, typography } = useAppTheme();
   const insets = useSafeAreaInsets();
@@ -75,6 +80,7 @@ export function AppSearchHeader({
 
   return (
     <View
+      {...viewTestProps(testID ? `${testID}_wrapper` : undefined)}
       style={[
         styles.wrapper,
         {
@@ -102,6 +108,7 @@ export function AppSearchHeader({
             autoFocus={autofocus}
             returnKeyType="search"
             selectionColor={colors.primary}
+            {...testProps(testID, hintText)}
             style={[
               typography.bodyLarge,
               styles.input,
@@ -113,7 +120,7 @@ export function AppSearchHeader({
               onPress={handleClear}
               hitSlop={8}
               accessibilityRole="button"
-              accessibilityLabel="Clear"
+              {...testProps(testID ? `${testID}_clear` : undefined, "Clear")}
               style={styles.clearButton}
             >
               <AppIcon name="close" size={18} color={colors.onSurfaceVariant} />
@@ -128,6 +135,7 @@ export function AppSearchHeader({
           rightIconBadgeCount={rightIconBadgeCount}
           rightIconBadgeMaxCount={rightIconBadgeMaxCount}
           showRightIconBadge={showRightIconBadge}
+          rightIconTestID={rightIconTestID}
         />
       </View>
     </View>

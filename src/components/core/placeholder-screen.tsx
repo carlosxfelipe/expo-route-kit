@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
+import { testProps, viewTestProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 import { AppHeader } from "./app-header";
@@ -8,19 +9,31 @@ import { AppHeader } from "./app-header";
 export interface PlaceholderScreenProps {
   title: string;
   description: string;
+  testID?: string;
+  headerTestID?: string;
+  titleTestID?: string;
+  descriptionTestID?: string;
 }
 
 export function PlaceholderScreen({
   title,
   description,
+  testID,
+  headerTestID,
+  titleTestID,
+  descriptionTestID,
 }: PlaceholderScreenProps) {
   const { colors, typography } = useAppTheme();
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.surface }]}>
-      <AppHeader title={title} />
+    <View
+      {...viewTestProps(testID)}
+      style={[styles.container, { backgroundColor: colors.surface }]}
+    >
+      <AppHeader title={title} testID={headerTestID} />
       <View style={styles.body}>
         <Text
+          {...testProps(titleTestID, title)}
           style={[
             typography.headlineSmall,
             styles.title,
@@ -30,6 +43,7 @@ export function PlaceholderScreen({
           {title}
         </Text>
         <Text
+          {...testProps(descriptionTestID, description)}
           style={[
             typography.bodyMedium,
             styles.description,

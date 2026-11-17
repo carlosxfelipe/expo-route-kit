@@ -13,6 +13,7 @@ import {
   type ViewStyle,
 } from "react-native";
 
+import { testProps, viewTestProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 import { AppIcon, type AppIconName } from "./app-icon";
@@ -38,6 +39,8 @@ export interface AppTextFieldProps {
   borderRadius?: number;
   labelBackgroundColor?: string;
   style?: StyleProp<ViewStyle>;
+  testID?: string;
+  accessibilityLabel?: string;
 }
 
 export function AppTextField({
@@ -61,6 +64,8 @@ export function AppTextField({
   borderRadius = 14,
   labelBackgroundColor,
   style,
+  testID,
+  accessibilityLabel,
 }: AppTextFieldProps) {
   const { colors, typography } = useAppTheme();
   const [isFocused, setIsFocused] = useState(false);
@@ -136,7 +141,10 @@ export function AppTextField({
         onPress={() => setIsObscured((prev) => !prev)}
         hitSlop={8}
         accessibilityRole="button"
-        accessibilityLabel={isObscured ? "Show password" : "Hide password"}
+        {...testProps(
+          testID ? `${testID}_toggle_visibility` : undefined,
+          isObscured ? "Show password" : "Hide password",
+        )}
         style={styles.toggleButton}
       >
         <AppIcon
@@ -148,8 +156,12 @@ export function AppTextField({
     ) : null);
 
   return (
-    <View style={[styles.wrapper, style]}>
+    <View
+      {...viewTestProps(testID ? `${testID}_wrapper` : undefined)}
+      style={[styles.wrapper, style]}
+    >
       <View
+        {...viewTestProps(testID ? `${testID}_container` : undefined)}
         style={[
           styles.inputContainer,
           {
@@ -228,6 +240,7 @@ export function AppTextField({
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           selectionColor={colors.primary}
+          {...testProps(testID, accessibilityLabel ?? label)}
           style={[
             typography.bodyLarge,
             styles.input,
@@ -241,6 +254,7 @@ export function AppTextField({
       </View>
       {hasError ? (
         <Text
+          {...testProps(testID ? `${testID}_error` : undefined, errorText)}
           style={[
             typography.bodySmall,
             styles.errorText,

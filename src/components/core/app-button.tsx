@@ -9,6 +9,7 @@ import {
   type ViewStyle,
 } from "react-native";
 
+import { testProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 import { AppIcon, type AppIconName } from "./app-icon";
@@ -27,6 +28,8 @@ export interface AppButtonProps {
   height?: number;
   borderRadius?: number;
   style?: StyleProp<ViewStyle>;
+  testID?: string;
+  accessibilityLabel?: string;
 }
 
 export function AppButton({
@@ -41,6 +44,8 @@ export function AppButton({
   height = 48,
   borderRadius = 14,
   style,
+  testID,
+  accessibilityLabel,
 }: AppButtonProps) {
   const { colors, typography } = useAppTheme();
   const blocked = isDisabled || isLoading;
@@ -92,6 +97,7 @@ export function AppButton({
       disabled={blocked}
       accessibilityRole="button"
       accessibilityState={{ disabled: blocked, busy: isLoading }}
+      {...testProps(testID, accessibilityLabel ?? label)}
       style={({ pressed }) => [
         styles.base,
         {

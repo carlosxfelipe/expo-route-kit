@@ -8,6 +8,7 @@ import {
   type ViewStyle,
 } from "react-native";
 
+import { testProps, viewTestProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 import { AppIcon, type AppIconName } from "./app-icon";
@@ -23,6 +24,8 @@ export interface AppListCardProps {
   onPress?: () => void;
   borderRadius?: number;
   style?: StyleProp<ViewStyle>;
+  testID?: string;
+  accessibilityLabel?: string;
 }
 
 export function AppListCard({
@@ -36,6 +39,8 @@ export function AppListCard({
   onPress,
   borderRadius = 12,
   style,
+  testID,
+  accessibilityLabel,
 }: AppListCardProps) {
   const { colors, typography } = useAppTheme();
 
@@ -51,24 +56,11 @@ export function AppListCard({
       <AppIcon name="chevron-right" size={22} color={colors.onSurfaceVariant} />
     ) : null);
 
-  return (
-    <Pressable
-      onPress={onPress}
-      disabled={!onPress}
-      accessibilityRole={onPress ? "button" : undefined}
-      style={({ pressed }) => [
-        styles.card,
-        {
-          borderRadius,
-          borderColor: colors.outlineVariant,
-          backgroundColor:
-            pressed && onPress
-              ? colors.surfaceContainerHigh
-              : colors.surfaceContainerLow,
-        },
-        style,
-      ]}
-    >
+  const resolvedLabel =
+    accessibilityLabel ?? (subtitle ? `${title}, ${subtitle}` : title);
+
+  const leadingAndText = (
+    <>
       {effectiveLeading ? (
         <View style={styles.leading}>{effectiveLeading}</View>
       ) : null}
@@ -90,6 +82,63 @@ export function AppListCard({
           </Text>
         ) : null}
       </View>
+    </>
+  );
+
+  // When a custom trailing widget (e.g. Switch) is provided alongside onPress,
+  // keep it outside the Pressable so iOS XCUITest/Maestro can target both
+  // independently instead of flattening trailing into the parent button.
+  if (trailing) {
+    return (
+      <View
+        {...viewTestProps(testID ? `${testID}_container` : undefined)}
+        style={[
+          styles.card,
+          {
+            borderRadius,
+            borderColor: colors.outlineVariant,
+            backgroundColor: colors.surfaceContainerLow,
+          },
+          style,
+        ]}
+      >
+        <Pressable
+          onPress={onPress}
+          disabled={!onPress}
+          accessibilityRole={onPress ? "button" : undefined}
+          {...testProps(testID, resolvedLabel)}
+          style={({ pressed }) => [
+            styles.mainPressable,
+            pressed && onPress ? { opacity: 0.72 } : undefined,
+          ]}
+        >
+          {leadingAndText}
+        </Pressable>
+        <View style={styles.trailing}>{trailing}</View>
+      </View>
+    );
+  }
+
+  return (
+    <Pressable
+      onPress={onPress}
+      disabled={!onPress}
+      accessibilityRole={onPress ? "button" : undefined}
+      {...testProps(testID, resolvedLabel)}
+      style={({ pressed }) => [
+        styles.card,
+        {
+          borderRadius,
+          borderColor: colors.outlineVariant,
+          backgroundColor:
+            pressed && onPress
+              ? colors.surfaceContainerHigh
+              : colors.surfaceContainerLow,
+        },
+        style,
+      ]}
+    >
+      {leadingAndText}
       {effectiveTrailing ? (
         <View style={styles.trailing}>{effectiveTrailing}</View>
       ) : null}
@@ -105,6 +154,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 14,
     marginBottom: 8,
+  },
+  mainPressable: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
   },
   leading: {
     marginRight: 16,

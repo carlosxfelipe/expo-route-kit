@@ -8,6 +8,7 @@ import {
   type ViewStyle,
 } from "react-native";
 
+import { testProps, viewTestProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 import { AppIcon, type AppIconName } from "./app-icon";
@@ -16,6 +17,7 @@ export interface SegmentedSwitcherOption<T extends string> {
   value: T;
   label: string;
   icon: AppIconName;
+  testID?: string;
 }
 
 export interface AppSegmentedSwitcherProps<T extends string> {
@@ -23,6 +25,7 @@ export interface AppSegmentedSwitcherProps<T extends string> {
   selected: T;
   onChanged: (value: T) => void;
   style?: StyleProp<ViewStyle>;
+  testID?: string;
 }
 
 export function AppSegmentedSwitcher<T extends string>({
@@ -30,12 +33,14 @@ export function AppSegmentedSwitcher<T extends string>({
   selected,
   onChanged,
   style,
+  testID,
 }: AppSegmentedSwitcherProps<T>) {
   const { colors, typography } = useAppTheme();
 
   return (
     <View
       accessibilityRole="radiogroup"
+      {...viewTestProps(testID)}
       style={[
         styles.container,
         {
@@ -50,6 +55,9 @@ export function AppSegmentedSwitcher<T extends string>({
           ? colors.onSecondaryContainer
           : colors.onSurface;
         const showDivider = index > 0;
+        const optionTestID =
+          option.testID ??
+          (testID ? `${testID}_${option.value.toLowerCase()}` : undefined);
 
         return (
           <Pressable
@@ -57,6 +65,7 @@ export function AppSegmentedSwitcher<T extends string>({
             onPress={() => onChanged(option.value)}
             accessibilityRole="radio"
             accessibilityState={{ selected: isSelected }}
+            {...testProps(optionTestID, option.label)}
             style={({ pressed }) => [
               styles.segment,
               showDivider && {

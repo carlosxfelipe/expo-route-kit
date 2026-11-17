@@ -14,6 +14,7 @@ import {
   ThemeSwitcher,
   useSnackbar,
 } from "@/components/core";
+import { testIds, viewTestProps } from "@/constants/test-ids";
 import {
   THEME_MODE_LABELS,
   THEME_PRESET_LABELS,
@@ -26,6 +27,7 @@ interface ShortcutItem {
   title: string;
   subtitle: string;
   route: "/explore" | "/profile";
+  testID: string;
 }
 
 const SHORTCUTS: readonly ShortcutItem[] = [
@@ -34,12 +36,14 @@ const SHORTCUTS: readonly ShortcutItem[] = [
     title: "Explore",
     subtitle: "Browse features and sections",
     route: "/explore",
+    testID: testIds.home.exploreCard,
   },
   {
     icon: "account-outline",
     title: "Profile",
     subtitle: "Account and preferences",
     route: "/profile",
+    testID: testIds.home.profileCard,
   },
 ];
 
@@ -54,21 +58,28 @@ export default function HomeScreen() {
   const [appearanceSheetVisible, setAppearanceSheetVisible] = useState(false);
 
   return (
-    <View style={[styles.screen, { backgroundColor: colors.surface }]}>
+    <View
+      {...viewTestProps(testIds.home.screen)}
+      style={[styles.screen, { backgroundColor: colors.surface }]}
+    >
       <AppHeader
         title="Home"
         rightIcon="bell-outline"
         rightIconTooltip="Notifications"
         rightIconBadgeCount={3}
         onRightIconPress={() => showSnackbar("3 new notifications")}
+        testID={testIds.home.header}
+        rightIconTestID={testIds.home.notificationsButton}
       />
       <ScrollView
+        {...viewTestProps(testIds.home.scroll)}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
         <AppBannerCard
           title="Welcome to Expo Route Kit"
           description="Starter template configured with expo-router and a persistent bottom navigation shell."
+          testID={testIds.home.welcomeBanner}
         />
 
         <Text style={[typography.titleMedium, styles.sectionTitle]}>
@@ -81,6 +92,7 @@ export default function HomeScreen() {
             title={item.title}
             subtitle={item.subtitle}
             onPress={() => router.navigate(item.route)}
+            testID={item.testID}
           />
         ))}
         <AppListCard
@@ -89,6 +101,7 @@ export default function HomeScreen() {
           subtitle="Sign out of your account"
           showChevron={false}
           onPress={() => setLogoutSheetVisible(true)}
+          testID={testIds.home.logoutCard}
         />
 
         <Text style={[typography.titleMedium, styles.sectionTitle]}>
@@ -99,6 +112,7 @@ export default function HomeScreen() {
           title="Appearance"
           subtitle={`Theme: ${THEME_MODE_LABELS[themeMode]} · ${THEME_PRESET_LABELS[themePreset]}`}
           onPress={() => setAppearanceSheetVisible(true)}
+          testID={testIds.home.appearanceCard}
         />
       </ScrollView>
 
@@ -106,21 +120,23 @@ export default function HomeScreen() {
         visible={appearanceSheetVisible}
         onClose={() => setAppearanceSheetVisible(false)}
         title="Appearance"
+        testID={testIds.home.appearanceSheet}
       >
         <Text style={[typography.titleMedium, styles.sheetLabel]}>
           App theme
         </Text>
-        <ThemeSwitcher />
+        <ThemeSwitcher testID={testIds.home.themeModeSwitcher} />
         <Text style={[typography.titleMedium, styles.sheetPresetLabel]}>
           Color palette
         </Text>
-        <ThemePresetSwitcher />
+        <ThemePresetSwitcher testID={testIds.home.themePresetSwitcher} />
       </AppBottomSheet>
 
       <AppBottomSheet
         visible={logoutSheetVisible}
         onClose={() => setLogoutSheetVisible(false)}
         title="Logout"
+        testID={testIds.home.logoutSheet}
       >
         <Text
           style={[
@@ -138,6 +154,7 @@ export default function HomeScreen() {
               variant="outlined"
               fullWidth
               onPress={() => setLogoutSheetVisible(false)}
+              testID={testIds.home.logoutCancelButton}
             />
           </View>
           <View style={styles.actionItem}>
@@ -149,6 +166,7 @@ export default function HomeScreen() {
                 setLogoutSheetVisible(false);
                 signOut();
               }}
+              testID={testIds.home.logoutConfirmButton}
             />
           </View>
         </View>

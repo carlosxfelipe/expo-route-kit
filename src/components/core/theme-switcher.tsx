@@ -10,6 +10,7 @@ import {
 export interface ThemeSwitcherProps {
   selectedMode?: ThemeMode;
   onChanged?: (mode: ThemeMode) => void;
+  testID?: string;
 }
 
 const THEME_OPTIONS: readonly SegmentedSwitcherOption<ThemeMode>[] = [
@@ -30,7 +31,11 @@ const THEME_OPTIONS: readonly SegmentedSwitcherOption<ThemeMode>[] = [
   },
 ];
 
-export function ThemeSwitcher({ selectedMode, onChanged }: ThemeSwitcherProps) {
+export function ThemeSwitcher({
+  selectedMode,
+  onChanged,
+  testID,
+}: ThemeSwitcherProps) {
   const { themeMode, setThemeMode } = useThemeMode();
 
   return (
@@ -38,6 +43,7 @@ export function ThemeSwitcher({ selectedMode, onChanged }: ThemeSwitcherProps) {
       options={THEME_OPTIONS}
       selected={selectedMode ?? themeMode}
       onChanged={onChanged ?? setThemeMode}
+      testID={testID}
     />
   );
 }
@@ -45,6 +51,7 @@ export function ThemeSwitcher({ selectedMode, onChanged }: ThemeSwitcherProps) {
 export interface ThemePresetSwitcherProps {
   selectedPreset?: AppThemePreset;
   onChanged?: (preset: AppThemePreset) => void;
+  testID?: string;
 }
 
 const PRESET_OPTIONS: readonly SegmentedSwitcherOption<AppThemePreset>[] = [
@@ -63,6 +70,7 @@ const PRESET_OPTIONS: readonly SegmentedSwitcherOption<AppThemePreset>[] = [
 export function ThemePresetSwitcher({
   selectedPreset,
   onChanged,
+  testID,
 }: ThemePresetSwitcherProps) {
   const { themePreset, setThemePreset } = useThemeMode();
 
@@ -71,6 +79,7 @@ export function ThemePresetSwitcher({
       options={PRESET_OPTIONS}
       selected={selectedPreset ?? themePreset}
       onChanged={onChanged ?? setThemePreset}
+      testID={testID}
     />
   );
 }

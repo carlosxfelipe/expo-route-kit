@@ -10,6 +10,7 @@ import React, {
 import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { testIds, testProps, viewTestProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 interface SnackbarContextValue {
@@ -80,6 +81,7 @@ export function SnackbarProvider({ children }: { children: React.ReactNode }) {
         {message !== null ? (
           <Animated.View
             pointerEvents="box-none"
+            {...viewTestProps(testIds.snackbar.container)}
             style={[
               styles.container,
               {
@@ -99,6 +101,7 @@ export function SnackbarProvider({ children }: { children: React.ReactNode }) {
               ]}
             >
               <Text
+                {...testProps(testIds.snackbar.text, message)}
                 style={[
                   typography.bodyMedium,
                   { color: colors.onInverseSurface },

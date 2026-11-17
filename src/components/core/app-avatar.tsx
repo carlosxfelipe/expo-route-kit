@@ -8,6 +8,7 @@ import {
   type ViewStyle,
 } from "react-native";
 
+import { leafTestProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 import { AppIcon } from "./app-icon";
@@ -20,6 +21,8 @@ export interface AppAvatarProps {
   backgroundColor?: string;
   foregroundColor?: string;
   style?: StyleProp<ViewStyle>;
+  testID?: string;
+  accessibilityLabel?: string;
 }
 
 function extractInitials(rawName?: string): string {
@@ -43,6 +46,8 @@ export function AppAvatar({
   backgroundColor,
   foregroundColor,
   style,
+  testID,
+  accessibilityLabel,
 }: AppAvatarProps) {
   const { colors } = useAppTheme();
   const initials = extractInitials(name);
@@ -52,7 +57,10 @@ export function AppAvatar({
   const badgeSize = radius * 0.52;
 
   return (
-    <View style={[{ width: size, height: size }, style]}>
+    <View
+      {...leafTestProps(testID, accessibilityLabel ?? name ?? "Avatar")}
+      style={[{ width: size, height: size }, style]}
+    >
       <View
         style={[
           styles.circle,

@@ -4,6 +4,7 @@ import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { AppIcon, type AppIconName } from "@/components/core";
+import { testIds } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 function TabBarIcon({
@@ -60,6 +61,8 @@ export default function MainShellLayout() {
         name="index"
         options={{
           title: "Home",
+          tabBarButtonTestID: testIds.tabs.home,
+          tabBarAccessibilityLabel: "Home",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon
               focused={focused}
@@ -73,6 +76,8 @@ export default function MainShellLayout() {
         name="explore"
         options={{
           title: "Explore",
+          tabBarButtonTestID: testIds.tabs.explore,
+          tabBarAccessibilityLabel: "Explore",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon
               focused={focused}
@@ -86,6 +91,8 @@ export default function MainShellLayout() {
         name="profile"
         options={{
           title: "Profile",
+          tabBarButtonTestID: testIds.tabs.profile,
+          tabBarAccessibilityLabel: "Profile",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon
               focused={focused}

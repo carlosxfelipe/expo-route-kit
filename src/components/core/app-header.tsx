@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { testProps, viewTestProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 import type { AppIconName } from "./app-icon";
@@ -19,6 +20,8 @@ export interface AppHeaderProps {
   actions?: React.ReactNode;
   centerTitle?: boolean;
   backgroundColor?: string;
+  testID?: string;
+  rightIconTestID?: string;
 }
 
 export function AppHeader({
@@ -33,6 +36,8 @@ export function AppHeader({
   actions,
   centerTitle = false,
   backgroundColor,
+  testID,
+  rightIconTestID,
 }: AppHeaderProps) {
   const { colors, typography } = useAppTheme();
   const insets = useSafeAreaInsets();
@@ -40,6 +45,7 @@ export function AppHeader({
 
   return (
     <View
+      {...viewTestProps(testID)}
       style={[
         styles.container,
         {
@@ -58,6 +64,7 @@ export function AppHeader({
         >
           <Text
             numberOfLines={1}
+            {...testProps(testID ? `${testID}_title` : undefined, title)}
             style={[typography.titleLarge, { color: colors.onSurface }]}
           >
             {title}
@@ -71,6 +78,7 @@ export function AppHeader({
           rightIconBadgeCount={rightIconBadgeCount}
           rightIconBadgeMaxCount={rightIconBadgeMaxCount}
           showRightIconBadge={showRightIconBadge}
+          rightIconTestID={rightIconTestID}
         />
       </View>
     </View>

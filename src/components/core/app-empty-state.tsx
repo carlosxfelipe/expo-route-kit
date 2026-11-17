@@ -7,6 +7,7 @@ import {
   type ViewStyle,
 } from "react-native";
 
+import { testProps, viewTestProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 import { AppButton } from "./app-button";
@@ -21,6 +22,8 @@ export interface AppEmptyStateProps {
   onActionPress?: () => void;
   iconColor?: string;
   style?: StyleProp<ViewStyle>;
+  testID?: string;
+  actionTestID?: string;
 }
 
 export function AppEmptyState({
@@ -32,11 +35,13 @@ export function AppEmptyState({
   onActionPress,
   iconColor,
   style,
+  testID,
+  actionTestID,
 }: AppEmptyStateProps) {
   const { colors, typography } = useAppTheme();
 
   return (
-    <View style={[styles.container, style]}>
+    <View {...viewTestProps(testID)} style={[styles.container, style]}>
       <View
         style={[
           styles.iconCircle,
@@ -46,6 +51,7 @@ export function AppEmptyState({
         <AppIcon name={icon} size={30} color={iconColor ?? colors.primary} />
       </View>
       <Text
+        {...testProps(testID ? `${testID}_title` : undefined, title)}
         style={[
           typography.titleMedium,
           styles.title,
@@ -56,6 +62,10 @@ export function AppEmptyState({
       </Text>
       {description ? (
         <Text
+          {...testProps(
+            testID ? `${testID}_description` : undefined,
+            description,
+          )}
           style={[
             typography.bodyMedium,
             styles.description,
@@ -72,6 +82,7 @@ export function AppEmptyState({
             leftIcon={actionIcon}
             variant="tonal"
             onPress={onActionPress}
+            testID={actionTestID}
           />
         </View>
       ) : null}

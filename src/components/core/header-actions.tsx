@@ -1,6 +1,7 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+import { testProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 import { AppIcon, type AppIconName } from "./app-icon";
@@ -13,6 +14,7 @@ export interface HeaderActionsProps {
   rightIconBadgeCount?: number;
   rightIconBadgeMaxCount?: number;
   showRightIconBadge?: boolean;
+  rightIconTestID?: string;
 }
 
 export function HeaderActions({
@@ -23,6 +25,7 @@ export function HeaderActions({
   rightIconBadgeCount,
   rightIconBadgeMaxCount = 9,
   showRightIconBadge = false,
+  rightIconTestID,
 }: HeaderActionsProps) {
   const { colors } = useAppTheme();
 
@@ -45,8 +48,8 @@ export function HeaderActions({
         <Pressable
           onPress={onRightIconPress}
           accessibilityRole="button"
-          accessibilityLabel={rightIconTooltip ?? rightIcon}
           hitSlop={8}
+          {...testProps(rightIconTestID, rightIconTooltip ?? rightIcon)}
           style={({ pressed }) => [
             styles.iconButton,
             pressed && { backgroundColor: colors.surfaceContainerHighest },
