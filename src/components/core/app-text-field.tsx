@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
+  Animated,
   Pressable,
   StyleSheet,
   Text,
@@ -35,6 +36,7 @@ export interface AppTextFieldProps {
   multiline?: boolean;
   numberOfLines?: number;
   borderRadius?: number;
+  labelBackgroundColor?: string;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -57,24 +59,75 @@ export function AppTextField({
   multiline = false,
   numberOfLines = 1,
   borderRadius = 14,
+  labelBackgroundColor,
   style,
 }: AppTextFieldProps) {
   const { colors, typography } = useAppTheme();
   const [isFocused, setIsFocused] = useState(false);
   const [isObscured, setIsObscured] = useState(obscureText);
+  const [internalText, setInternalText] = useState(value ?? "");
 
   useEffect(() => {
     setIsObscured(obscureText);
   }, [obscureText]);
 
+  useEffect(() => {
+    if (value !== undefined) {
+      setInternalText(value);
+    }
+  }, [value]);
+
+  const currentValue = value ?? internalText;
   const isMultiline = multiline && !isObscured;
+  const hasValue = currentValue.length > 0;
+  const isFloated = isFocused || hasValue;
   const hasError = Boolean(errorText);
+
+  const floatAnim = useRef(new Animated.Value(isFloated ? 1 : 0)).current;
+
+  useEffect(() => {
+    Animated.timing(floatAnim, {
+      toValue: isFloated ? 1 : 0,
+      duration: 150,
+      useNativeDriver: false,
+    }).start();
+  }, [floatAnim, isFloated]);
+
   const borderColor = hasError
     ? colors.error
     : isFocused
       ? colors.primary
       : colors.outlineVariant;
   const borderWidth = isFocused || hasError ? 1.5 : 1;
+
+  const restingLeft = prefixIcon ? 40 : 10;
+  const floatedLeft = 10;
+
+  const animatedLabelTop = floatAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [16, -9],
+  });
+  const animatedLabelLeft = floatAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [restingLeft, floatedLeft],
+  });
+  const animatedLabelFontSize = floatAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [16, 12],
+  });
+
+  const labelColor = hasError
+    ? colors.error
+    : isFocused
+      ? colors.primary
+      : colors.onSurfaceVariant;
+
+  const handleChangeText = (next: string) => {
+    if (value === undefined) {
+      setInternalText(next);
+    }
+    onChangeText?.(next);
+  };
 
   const effectiveSuffix =
     suffixIcon ??
@@ -96,21 +149,6 @@ export function AppTextField({
 
   return (
     <View style={[styles.wrapper, style]}>
-      <Text
-        style={[
-          typography.labelMedium,
-          styles.label,
-          {
-            color: hasError
-              ? colors.error
-              : isFocused
-                ? colors.primary
-                : colors.onSurfaceVariant,
-          },
-        ]}
-      >
-        {label}
-      </Text>
       <View
         style={[
           styles.inputContainer,
@@ -123,6 +161,41 @@ export function AppTextField({
           },
         ]}
       >
+        <Animated.View
+          pointerEvents="none"
+          style={[
+            styles.floatingLabelWrapper,
+            {
+              top: animatedLabelTop,
+              left: animatedLabelLeft,
+            },
+          ]}
+        >
+          <Animated.View
+            style={[
+              styles.borderCutout,
+              {
+                opacity: floatAnim,
+                backgroundColor: labelBackgroundColor ?? colors.surface,
+              },
+            ]}
+          />
+          <Animated.Text
+            numberOfLines={1}
+            style={[
+              styles.floatingLabelText,
+              {
+                fontFamily: typography.bodyLarge.fontFamily,
+                fontSize: animatedLabelFontSize,
+                fontWeight: isFloated ? "500" : "400",
+                color: labelColor,
+              },
+            ]}
+          >
+            {label}
+          </Animated.Text>
+        </Animated.View>
+
         {prefixIcon ? (
           <View style={styles.prefix}>
             <AppIcon
@@ -139,9 +212,9 @@ export function AppTextField({
           </View>
         ) : null}
         <TextInput
-          value={value}
-          onChangeText={onChangeText}
-          placeholder={hintText ?? label}
+          value={currentValue}
+          onChangeText={handleChangeText}
+          placeholder={isFocused && hintText ? hintText : undefined}
           placeholderTextColor={colors.onSurfaceVariant}
           secureTextEntry={isObscured}
           editable={enabled}
@@ -185,15 +258,28 @@ const styles = StyleSheet.create({
   wrapper: {
     width: "100%",
   },
-  label: {
-    marginBottom: 6,
-    marginLeft: 2,
-  },
   inputContainer: {
+    position: "relative",
     flexDirection: "row",
     alignItems: "center",
     minHeight: 52,
     paddingHorizontal: 14,
+    overflow: "visible",
+  },
+  floatingLabelWrapper: {
+    position: "absolute",
+    paddingHorizontal: 4,
+    zIndex: 2,
+  },
+  borderCutout: {
+    position: "absolute",
+    top: 7,
+    left: 0,
+    right: 0,
+    height: 5,
+  },
+  floatingLabelText: {
+    lineHeight: 18,
   },
   prefix: {
     marginRight: 10,

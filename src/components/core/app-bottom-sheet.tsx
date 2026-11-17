@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
+  Animated,
+  Easing,
   KeyboardAvoidingView,
   Modal,
   Platform,
@@ -8,6 +10,7 @@ import {
   StyleSheet,
   Text,
   View,
+  useWindowDimensions,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -32,12 +35,88 @@ export function AppBottomSheet({
 }: AppBottomSheetProps) {
   const { colors, typography } = useAppTheme();
   const insets = useSafeAreaInsets();
+  const { height: windowHeight } = useWindowDimensions();
+  const offscreenY = Math.max(windowHeight, 500);
+
+  const [rendered, setRendered] = useState(visible);
+  const backdropOpacity = useRef(new Animated.Value(visible ? 1 : 0)).current;
+  const sheetTranslateY = useRef(
+    new Animated.Value(visible ? 0 : offscreenY),
+  ).current;
+  const isOpenRef = useRef(visible);
+  const activeAnimationRef = useRef<Animated.CompositeAnimation | null>(null);
+
+  useEffect(() => {
+    if (visible && !rendered) {
+      setRendered(true);
+      return;
+    }
+
+    if (visible && rendered && !isOpenRef.current) {
+      isOpenRef.current = true;
+      activeAnimationRef.current?.stop();
+      backdropOpacity.setValue(0);
+      sheetTranslateY.setValue(offscreenY);
+
+      const anim = Animated.parallel([
+        Animated.timing(backdropOpacity, {
+          toValue: 1,
+          duration: 200,
+          useNativeDriver: true,
+        }),
+        Animated.timing(sheetTranslateY, {
+          toValue: 0,
+          duration: 240,
+          easing: Easing.out(Easing.cubic),
+          useNativeDriver: true,
+        }),
+      ]);
+      activeAnimationRef.current = anim;
+      anim.start();
+      return;
+    }
+
+    if (!visible && rendered && isOpenRef.current) {
+      isOpenRef.current = false;
+      activeAnimationRef.current?.stop();
+
+      const anim = Animated.parallel([
+        Animated.timing(backdropOpacity, {
+          toValue: 0,
+          duration: 180,
+          useNativeDriver: true,
+        }),
+        Animated.timing(sheetTranslateY, {
+          toValue: offscreenY,
+          duration: 200,
+          easing: Easing.in(Easing.cubic),
+          useNativeDriver: true,
+        }),
+      ]);
+      activeAnimationRef.current = anim;
+      anim.start(({ finished }) => {
+        if (finished) {
+          setRendered(false);
+        }
+      });
+    }
+  }, [visible, rendered, offscreenY, backdropOpacity, sheetTranslateY]);
+
+  useEffect(() => {
+    return () => {
+      activeAnimationRef.current?.stop();
+    };
+  }, []);
+
+  if (!rendered) {
+    return null;
+  }
 
   return (
     <Modal
-      visible={visible}
+      visible={rendered}
       transparent
-      animationType="slide"
+      animationType="none"
       statusBarTranslucent
       onRequestClose={onClose}
     >
@@ -45,17 +124,29 @@ export function AppBottomSheet({
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={styles.overlay}
       >
-        <Pressable
-          style={[styles.backdrop, { backgroundColor: "rgba(0, 0, 0, 0.45)" }]}
-          onPress={onClose}
-          accessibilityLabel="Close sheet"
-        />
-        <View
+        <Animated.View
+          style={[
+            styles.backdrop,
+            {
+              backgroundColor: "rgba(0, 0, 0, 0.45)",
+              opacity: backdropOpacity,
+            },
+          ]}
+        >
+          <Pressable
+            style={styles.backdropPressable}
+            onPress={onClose}
+            accessibilityLabel="Close sheet"
+          />
+        </Animated.View>
+
+        <Animated.View
           style={[
             styles.sheet,
             {
               backgroundColor: colors.surfaceContainerLow,
               paddingBottom: Math.max(insets.bottom, 16) + 8,
+              transform: [{ translateY: sheetTranslateY }],
             },
           ]}
         >
@@ -103,7 +194,7 @@ export function AppBottomSheet({
             ) : null}
             {children}
           </ScrollView>
-        </View>
+        </Animated.View>
       </KeyboardAvoidingView>
     </Modal>
   );
@@ -120,6 +211,9 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     left: 0,
+  },
+  backdropPressable: {
+    flex: 1,
   },
   sheet: {
     width: "100%",
