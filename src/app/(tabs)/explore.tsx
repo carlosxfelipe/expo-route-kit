@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ScrollView, StyleSheet, Switch, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import {
@@ -12,6 +12,7 @@ import {
   AppListCard,
   AppSearchHeader,
   AppSegmentedSwitcher,
+  AppSwitch,
   AppTextField,
   type SegmentedSwitcherOption,
   useSnackbar,
@@ -201,20 +202,11 @@ export default function ExploreScreen() {
           showChevron={false}
           testID={testIds.explore.notificationsCard}
           trailing={
-            <Switch
+            <AppSwitch
               value={notificationsEnabled}
               onValueChange={setNotificationsEnabled}
-              {...testProps(
-                testIds.explore.notificationsSwitch,
-                "Push Notifications",
-              )}
-              trackColor={{
-                false: colors.surfaceContainerHighest,
-                true: colors.primaryContainer,
-              }}
-              thumbColor={
-                notificationsEnabled ? colors.primary : colors.outline
-              }
+              testID={testIds.explore.notificationsSwitch}
+              accessibilityLabel="Push Notifications"
             />
           }
           onPress={() => setNotificationsEnabled((prev) => !prev)}

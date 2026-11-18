@@ -1,5 +1,7 @@
 # Expo Route Kit
 
+> **⚠️ THIS PROJECT IS CURRENTLY UNDER DEVELOPMENT.**
+
 This project is a starter kit template configured for cross-platform development (iOS, Android, and Web) using Expo.
 
 ## How to use this template in a new project

@@ -20,6 +20,7 @@ export {
   type SegmentedSwitcherOption,
 } from "./app-segmented-switcher";
 export { SnackbarProvider, useSnackbar } from "./app-snackbar";
+export { AppSwitch, type AppSwitchProps } from "./app-switch";
 export { AppTextField, type AppTextFieldProps } from "./app-text-field";
 export { HeaderActions, type HeaderActionsProps } from "./header-actions";
 export {
