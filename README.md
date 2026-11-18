@@ -2,6 +2,10 @@
 
 > **⚠️ THIS PROJECT IS CURRENTLY UNDER DEVELOPMENT.**
 
+Web preview: [https://expo-route-kit.netlify.app/](https://expo-route-kit.netlify.app/)
+
+Note: The web version would require dedicated adjustments to be treated as a standalone web product. The main focus of this template is mobile (Android and iOS), so the web build is intended only as a quick workaround and live preview of the project.
+
 This project is a starter kit template configured for cross-platform development (iOS, Android, and Web) using Expo.
 
 ## How to use this template in a new project
