@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { testProps, viewTestProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
@@ -23,6 +24,7 @@ export function PlaceholderScreen({
   descriptionTestID,
 }: PlaceholderScreenProps) {
   const { colors, typography } = useAppTheme();
+  const insets = useSafeAreaInsets();
 
   return (
     <View
@@ -30,7 +32,7 @@ export function PlaceholderScreen({
       style={[styles.container, { backgroundColor: colors.surface }]}
     >
       <AppHeader title={title} testID={headerTestID} />
-      <View style={styles.body}>
+      <View style={[styles.body, { paddingBottom: 24 + insets.bottom }]}>
         <Text
           {...testProps(titleTestID, title)}
           style={[

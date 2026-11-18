@@ -48,6 +48,42 @@ if (Platform.OS === "ios") {
 }
 ```
 
+## Authentication Flow
+
+Route protection is handled with `Stack.Protected` in `src/app/_layout.tsx` and controlled by the `REQUIRE_AUTH` flag in `src/auth/auth-session.tsx`:
+
+```ts
+// Set to false to disable the login flow and start directly on the main tabs.
+export const REQUIRE_AUTH = true;
+```
+
+- `REQUIRE_AUTH = true` (default) — starts on `/login` (`src/app/login.tsx`) and redirects to the main tabs after signing in.
+- `REQUIRE_AUTH = false` — skips the login screen and opens directly on the main tabs (`Home`, `Explore`, `Profile`).
+
+## Themes (Light / Dark & Color Presets)
+
+The template supports **Light**, **Dark**, and **System** appearance modes (`ThemeMode`) along with two Material 3 theme presets:
+
+- **`custom_blue`** (`src/theme/custom-blue-theme.ts`) — default preset with neutral pure white/black surfaces.
+- **`deep_purple`** (`src/theme/deep-purple-theme.ts`) — standard Material 3 deep purple palette.
+
+**Where to switch:**
+
+- **Default preset in code:** update `DEFAULT_THEME_PRESET` in `src/theme/theme-mode.tsx` (`"custom_blue"` or `"deep_purple"`).
+- **At runtime (UI):** tap **Appearance** on the **Home** screen to toggle both appearance mode (`ThemeSwitcher`) and color palette (`ThemePresetSwitcher`), or call `setThemeMode` / `setThemePreset` from `useThemeMode()`.
+
+## Core Components & Screens
+
+- **Screens (`src/app/`):** `login.tsx`, `(tabs)/index.tsx` (Home), `(tabs)/explore.tsx` (interactive component showcase), and `(tabs)/profile.tsx` (Profile).
+- **Core UI (`src/components/core/`):** `AppButton`, `AppTextField`, `AppHeader`, `AppSearchHeader`, `AppListCard`, `AppBannerCard`, `AppEmptyState`, `AppBottomSheet`, `AppAvatar`, `AppSegmentedSwitcher`, `ThemeSwitcher`, `ThemePresetSwitcher`, `SnackbarProvider` / `useSnackbar`, `PlaceholderScreen`, and `AppIcon`.
+
+## E2E Testing with Maestro
+
+All screens, tabs (both `IosNativeTabs` on iOS and `Tabs` on Android/Web), inputs, buttons, switches, and bottom sheets are wired for **Maestro** automated testing:
+
+- **Centralized registry:** `testIds` in `src/constants/test-ids.ts` (e.g., `testIds.login.emailInput`, `testIds.tabs.explore`, `testIds.home.logoutConfirmButton`).
+- **Cross-platform helpers:** `testProps`, `leafTestProps`, and `viewTestProps` in `src/constants/test-ids.ts` handle `collapsable={false}` (preventing Android view flattening) and iOS accessibility separation (so nested controls like `Switch` inside `AppListCard` remain independently targetable).
+
 ## Recommended scripts
 
 Add the following scripts to the `package.json` of your new project:

@@ -1,6 +1,7 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useAuthSession } from "@/auth";
 import {
@@ -53,6 +54,7 @@ export default function HomeScreen() {
   const { signOut } = useAuthSession();
   const { showSnackbar } = useSnackbar();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   const [logoutSheetVisible, setLogoutSheetVisible] = useState(false);
   const [appearanceSheetVisible, setAppearanceSheetVisible] = useState(false);
@@ -73,7 +75,10 @@ export default function HomeScreen() {
       />
       <ScrollView
         {...viewTestProps(testIds.home.scroll)}
-        contentContainerStyle={styles.content}
+        contentContainerStyle={[
+          styles.content,
+          { paddingBottom: 24 + insets.bottom },
+        ]}
         showsVerticalScrollIndicator={false}
       >
         <AppBannerCard

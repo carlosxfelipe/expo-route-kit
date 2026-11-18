@@ -48,16 +48,18 @@ export default function MainShellLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
+        tabBarLabelPosition: "below-icon",
         tabBarActiveTintColor: colors.onSurface,
         tabBarInactiveTintColor: colors.onSurfaceVariant,
         tabBarLabelStyle: styles.label,
+        tabBarIconStyle: styles.icon,
         tabBarStyle: {
           backgroundColor: colors.surfaceContainerLow,
           borderTopColor: colors.outlineVariant,
           borderTopWidth: 1,
-          height: 64 + insets.bottom,
-          paddingTop: 8,
-          paddingBottom: Math.max(insets.bottom, 8),
+          height: 72 + insets.bottom,
+          paddingTop: 4,
+          paddingBottom: insets.bottom,
         },
       }}
     >
@@ -111,6 +113,10 @@ export default function MainShellLayout() {
 }
 
 const styles = StyleSheet.create({
+  icon: {
+    width: 56,
+    height: 30,
+  },
   pill: {
     width: 56,
     height: 30,
@@ -120,7 +126,8 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 12,
+    lineHeight: 16,
     fontWeight: "600",
-    marginTop: 2,
+    marginTop: 4,
   },
 });

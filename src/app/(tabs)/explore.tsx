@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ScrollView, StyleSheet, Switch, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import {
   AppAvatar,
@@ -41,6 +42,7 @@ function SectionTitle({ title }: { title: string }) {
 export default function ExploreScreen() {
   const { colors, typography } = useAppTheme();
   const { showSnackbar } = useSnackbar();
+  const insets = useSafeAreaInsets();
 
   const [isLoading, setIsLoading] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
@@ -79,7 +81,10 @@ export default function ExploreScreen() {
       <AppHeader title="Explore" testID={testIds.explore.header} />
       <ScrollView
         {...viewTestProps(testIds.explore.scroll)}
-        contentContainerStyle={styles.content}
+        contentContainerStyle={[
+          styles.content,
+          { paddingBottom: 28 + insets.bottom },
+        ]}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >

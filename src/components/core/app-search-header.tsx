@@ -1,4 +1,4 @@
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import {
   Pressable,
   StyleSheet,
@@ -14,6 +14,7 @@ import { useAppTheme } from "@/theme";
 
 import { AppIcon, type AppIconName } from "./app-icon";
 import { HeaderActions } from "./header-actions";
+import { ensureWebAutofillStyle, getWebInputProps } from "./web-autofill";
 
 export interface AppSearchHeaderProps {
   value?: string;
@@ -59,6 +60,15 @@ export function AppSearchHeader({
   const { colors, typography } = useAppTheme();
   const insets = useSafeAreaInsets();
   const [internalValue, setInternalValue] = useState("");
+
+  useEffect(() => {
+    ensureWebAutofillStyle();
+  }, []);
+
+  const webInput = getWebInputProps(
+    colors.surfaceContainerHigh,
+    colors.onSurface,
+  );
 
   const isControlled = value !== undefined;
   const currentValue = isControlled ? value : internalValue;
@@ -108,11 +118,13 @@ export function AppSearchHeader({
             autoFocus={autofocus}
             returnKeyType="search"
             selectionColor={colors.primary}
+            {...webInput.props}
             {...testProps(testID, hintText)}
             style={[
               typography.bodyLarge,
               styles.input,
               { color: colors.onSurface },
+              webInput.style as never,
             ]}
           />
           {currentValue.length > 0 ? (
@@ -167,6 +179,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    minWidth: 0,
     height: 48,
     lineHeight: undefined,
     paddingVertical: 0,

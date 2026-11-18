@@ -17,6 +17,7 @@ import { testProps, viewTestProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 import { AppIcon, type AppIconName } from "./app-icon";
+import { ensureWebAutofillStyle, getWebInputProps } from "./web-autofill";
 
 export interface AppTextFieldProps {
   value?: string;
@@ -71,6 +72,11 @@ export function AppTextField({
   const [isFocused, setIsFocused] = useState(false);
   const [isObscured, setIsObscured] = useState(obscureText);
   const [internalText, setInternalText] = useState(value ?? "");
+  const [isAutofilled, setIsAutofilled] = useState(false);
+
+  useEffect(() => {
+    ensureWebAutofillStyle();
+  }, []);
 
   useEffect(() => {
     setIsObscured(obscureText);
@@ -79,13 +85,16 @@ export function AppTextField({
   useEffect(() => {
     if (value !== undefined) {
       setInternalText(value);
+      if (value.length === 0) {
+        setIsAutofilled(false);
+      }
     }
   }, [value]);
 
   const currentValue = value ?? internalText;
   const isMultiline = multiline && !isObscured;
   const hasValue = currentValue.length > 0;
-  const isFloated = isFocused || hasValue;
+  const isFloated = isFocused || hasValue || isAutofilled;
   const hasError = Boolean(errorText);
 
   const floatAnim = useRef(new Animated.Value(isFloated ? 1 : 0)).current;
@@ -128,11 +137,20 @@ export function AppTextField({
       : colors.onSurfaceVariant;
 
   const handleChangeText = (next: string) => {
+    if (next.length === 0) {
+      setIsAutofilled(false);
+    }
     if (value === undefined) {
       setInternalText(next);
     }
     onChangeText?.(next);
   };
+
+  const webInput = getWebInputProps(
+    colors.surfaceContainerLow,
+    colors.onSurface,
+    () => setIsAutofilled(true),
+  );
 
   const effectiveSuffix =
     suffixIcon ??
@@ -240,11 +258,13 @@ export function AppTextField({
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           selectionColor={colors.primary}
+          {...webInput.props}
           {...testProps(testID, accessibilityLabel ?? label)}
           style={[
             typography.bodyLarge,
             styles.input,
             { color: colors.onSurface },
+            webInput.style as never,
             isMultiline ? styles.multilineInput : styles.singleLineInput,
           ]}
         />
@@ -300,6 +320,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    minWidth: 0,
     outlineStyle: "none" as never,
   },
   singleLineInput: {
