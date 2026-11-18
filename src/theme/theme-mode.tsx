@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import { useColorScheme } from "react-native";
 
 import { CustomBlueTheme } from "./custom-blue-theme";
@@ -42,7 +48,7 @@ export function AppThemeProvider({
   children,
   initialPreset = DEFAULT_THEME_PRESET,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   initialPreset?: AppThemePreset;
 }) {
   const systemColorScheme = useColorScheme();

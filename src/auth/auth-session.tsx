@@ -1,5 +1,6 @@
-import React, {
+import {
   createContext,
+  type ReactNode,
   useCallback,
   useContext,
   useMemo,
@@ -17,7 +18,7 @@ interface AuthSessionContextValue {
 
 const AuthSessionContext = createContext<AuthSessionContextValue | null>(null);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(!REQUIRE_AUTH);
 
   const signIn = useCallback(() => {

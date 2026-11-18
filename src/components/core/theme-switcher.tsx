@@ -1,5 +1,3 @@
-import React from "react";
-
 import { type AppThemePreset, type ThemeMode, useThemeMode } from "@/theme";
 
 import {

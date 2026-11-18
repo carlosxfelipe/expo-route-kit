@@ -1,5 +1,5 @@
 import { useNavigation, usePreventRemove } from "expo-router";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,

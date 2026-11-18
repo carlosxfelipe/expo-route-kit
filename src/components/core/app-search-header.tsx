@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { type ReactNode, useState } from "react";
 import {
   Pressable,
   StyleSheet,
@@ -22,14 +22,14 @@ export interface AppSearchHeaderProps {
   onSubmitted?: (value: string) => void;
   onClear?: () => void;
   autofocus?: boolean;
-  leading?: React.ReactNode;
+  leading?: ReactNode;
   rightIcon?: AppIconName;
   onRightIconPress?: () => void;
   rightIconTooltip?: string;
   rightIconBadgeCount?: number;
   rightIconBadgeMaxCount?: number;
   showRightIconBadge?: boolean;
-  actions?: React.ReactNode;
+  actions?: ReactNode;
   safeAreaTop?: boolean;
   style?: StyleProp<ViewStyle>;
   testID?: string;

@@ -2,7 +2,6 @@ import {
   MaterialDesignIcons,
   type MaterialDesignIconsIconName,
 } from "@react-native-vector-icons/material-design-icons";
-import React from "react";
 import type { StyleProp, TextStyle } from "react-native";
 
 import { testProps } from "@/constants/test-ids";

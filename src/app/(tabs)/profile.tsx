@@ -1,5 +1,3 @@
-import React from "react";
-
 import { PlaceholderScreen } from "@/components/core";
 import { testIds } from "@/constants/test-ids";
 

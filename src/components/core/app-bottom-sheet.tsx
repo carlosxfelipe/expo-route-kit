@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import {
   Animated,
   Easing,
@@ -24,7 +24,7 @@ export interface AppBottomSheetProps {
   onClose: () => void;
   title?: string;
   showDragHandle?: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
   testID?: string;
 }
 

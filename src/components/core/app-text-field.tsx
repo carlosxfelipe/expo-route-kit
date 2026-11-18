@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import {
   Animated,
   Pressable,
@@ -24,7 +24,7 @@ export interface AppTextFieldProps {
   label: string;
   hintText?: string;
   prefixIcon?: AppIconName;
-  suffixIcon?: React.ReactNode;
+  suffixIcon?: ReactNode;
   obscureText?: boolean;
   enableVisibilityToggle?: boolean;
   keyboardType?: KeyboardTypeOptions;

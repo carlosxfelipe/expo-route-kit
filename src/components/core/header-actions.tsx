@@ -1,4 +1,4 @@
-import React from "react";
+import type { ReactNode } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { testProps } from "@/constants/test-ids";
@@ -7,7 +7,7 @@ import { useAppTheme } from "@/theme";
 import { AppIcon, type AppIconName } from "./app-icon";
 
 export interface HeaderActionsProps {
-  actions?: React.ReactNode;
+  actions?: ReactNode;
   rightIcon?: AppIconName;
   onRightIconPress?: () => void;
   rightIconTooltip?: string;

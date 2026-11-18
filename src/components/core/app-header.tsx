@@ -1,4 +1,4 @@
-import React from "react";
+import type { ReactNode } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -10,14 +10,14 @@ import { HeaderActions } from "./header-actions";
 
 export interface AppHeaderProps {
   title: string;
-  leading?: React.ReactNode;
+  leading?: ReactNode;
   rightIcon?: AppIconName;
   onRightIconPress?: () => void;
   rightIconTooltip?: string;
   rightIconBadgeCount?: number;
   rightIconBadgeMaxCount?: number;
   showRightIconBadge?: boolean;
-  actions?: React.ReactNode;
+  actions?: ReactNode;
   centerTitle?: boolean;
   backgroundColor?: string;
   testID?: string;

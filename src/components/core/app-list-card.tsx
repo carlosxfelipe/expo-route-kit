@@ -1,4 +1,4 @@
-import React from "react";
+import type { ReactNode } from "react";
 import {
   Pressable,
   StyleSheet,
@@ -18,8 +18,8 @@ export interface AppListCardProps {
   subtitle?: string;
   icon?: AppIconName;
   iconColor?: string;
-  leading?: React.ReactNode;
-  trailing?: React.ReactNode;
+  leading?: ReactNode;
+  trailing?: ReactNode;
   showChevron?: boolean;
   onPress?: () => void;
   borderRadius?: number;

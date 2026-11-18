@@ -1,5 +1,4 @@
 import { Tabs } from "expo-router/js-tabs";
-import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 

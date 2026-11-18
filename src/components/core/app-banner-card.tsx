@@ -1,4 +1,4 @@
-import React from "react";
+import type { ReactNode } from "react";
 import {
   Pressable,
   StyleSheet,
@@ -22,7 +22,7 @@ export interface AppBannerCardProps {
   padding?: number;
   borderRadius?: number;
   onPress?: () => void;
-  footer?: React.ReactNode;
+  footer?: ReactNode;
   style?: StyleProp<ViewStyle>;
   testID?: string;
   accessibilityLabel?: string;

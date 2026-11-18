@@ -1,5 +1,6 @@
-import React, {
+import {
   createContext,
+  type ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -20,7 +21,7 @@ interface SnackbarContextValue {
 
 const SnackbarContext = createContext<SnackbarContextValue | null>(null);
 
-export function SnackbarProvider({ children }: { children: React.ReactNode }) {
+export function SnackbarProvider({ children }: { children: ReactNode }) {
   const { colors, typography } = useAppTheme();
   const insets = useSafeAreaInsets();
   const [message, setMessage] = useState<string | null>(null);

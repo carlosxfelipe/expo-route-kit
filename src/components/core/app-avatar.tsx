@@ -1,5 +1,4 @@
 import { Image, type ImageSource } from "expo-image";
-import React from "react";
 import {
   StyleSheet,
   Text,

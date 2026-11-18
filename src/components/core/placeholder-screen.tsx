@@ -1,4 +1,3 @@
-import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { testProps, viewTestProps } from "@/constants/test-ids";
