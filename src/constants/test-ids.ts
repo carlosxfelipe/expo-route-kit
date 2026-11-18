@@ -27,6 +27,8 @@
  * - AppBottomSheet:        `${testID}_title`, `${testID}_close`, `${testID}_backdrop`
  * - AppEmptyState:         `${testID}_title`, `${testID}_description`
  * - AppSegmentedSwitcher:  `${testID}_${option.value.toLowerCase()}`
+ * - NativeTabs.Trigger:    `testID` maps to iOS `accessibilityIdentifier` (Maestro `id`);
+ *                          `accessibilityLabel` maps to visible tab label ("Home", "Explore", "Profile").
  */
 export const testIds = {
   // Navigation & Tabs

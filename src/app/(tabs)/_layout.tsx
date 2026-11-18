@@ -1,9 +1,10 @@
 import { Tabs } from "expo-router/js-tabs";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { AppIcon, type AppIconName } from "@/components/core";
 import { testIds } from "@/constants/test-ids";
+import { IosNativeTabs } from "@/layouts/ios-native-tabs";
 import { useAppTheme } from "@/theme";
 
 function TabBarIcon({
@@ -38,6 +39,10 @@ function TabBarIcon({
 export default function MainShellLayout() {
   const { colors } = useAppTheme();
   const insets = useSafeAreaInsets();
+
+  if (Platform.OS === "ios") {
+    return <IosNativeTabs colors={colors} />;
+  }
 
   return (
     <Tabs

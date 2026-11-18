@@ -1,34 +1,35 @@
-# Expo Starter Kit
+# Expo Route Kit
 
-Este projeto é um template de inicialização (starter kit) configurado para desenvolvimento multiplataforma (iOS, Android e Web) utilizando Expo.
+This project is a starter kit template configured for cross-platform development (iOS, Android, and Web) using Expo.
 
-## Como utilizar este template em um novo projeto
+## How to use this template in a new project
 
-1. **Crie um novo projeto Expo:**
+1. **Create a new Expo project:**
 
    ```bash
-   npx create-expo-app@latest meu-projeto
+   npx create-expo-app@latest my-app
    ```
 
-2. **Instale a biblioteca de ícones:**
-   Como o componente de ícones deste template utiliza a biblioteca modular `@react-native-vector-icons`, instale a dependência no novo projeto:
+2. **Install the icon library:**
+   Since the icon component in this template uses the modular `@react-native-vector-icons` library, install the dependency in your new project:
 
    ```bash
    npx expo install @react-native-vector-icons/material-design-icons
    ```
 
-3. **Configure a estrutura de pastas:**
-   - Apague a pasta `src` que foi gerada por padrão no seu novo projeto.
-   - Copie a pasta `src` deste template (`expo-starter-kit`) e cole-a na raiz do seu novo projeto.
+3. **Set up the folder structure:**
+   - Delete the default `src` folder generated in your new project.
+   - Copy the `src` folder from this template (`expo-route-kit`) and paste it into the root of your new project.
 
-   **Dica:** Para fazer isso automaticamente via terminal sem precisar baixar manualmente, você pode rodar o seguinte comando na raiz do seu novo projeto:
+   **Tip:** To do this automatically via terminal without downloading manually, run the following command in the root of your new project:
+
    ```bash
-   rm -rf src && npx --yes degit carlosxfelipe/expo-starter-kit/src src --force
+   rm -rf src && npx --yes degit carlosxfelipe/expo-route-kit/src src --force
    ```
 
-## Como rodar o projeto
+## How to run the project
 
-Para iniciar o projeto, utilize:
+To start the project, run:
 
 ```bash
 npm run android
@@ -36,72 +37,20 @@ npm run ios
 npm run web
 ```
 
-## Customização da Tab Bar (iOS)
+## Tab Bar Customization (iOS)
 
-Este template inclui por padrão uma tab bar nativa com efeito translúcido (liquid glass) exclusiva para o iOS.
-Caso você não queira utilizar esse efeito nativo e prefira o fallback tradicional do Expo Router (o mesmo que roda no Android), basta abrir o arquivo `src/app/_layout.tsx` e apagar o seguinte bloco de código:
-
-```tsx
-  if (Platform.OS === "ios") {
-    return (
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <AnimatedSplashOverlay />
-        <IosNativeTabs colors={colors} />
-      </ThemeProvider>
-    );
-  }
-```
-
-## Barra de Pesquisa Nativa
-
-A tela principal (Home) vem configurada com uma barra de pesquisa nativa (suportada tanto no iOS quanto no Android). Caso você não queira utilizar esse recurso, basta abrir o arquivo `src/app/(home)/index.tsx` e apagar o seguinte trecho de código dentro das opções do `Stack.Screen`:
+This template includes by default a native tab bar with a translucent (liquid glass) effect exclusive to iOS.
+If you prefer not to use this native effect and want the traditional Expo Router fallback (the same one that runs on Android), open `src/app/(tabs)/_layout.tsx` and delete the following code block:
 
 ```tsx
-headerSearchBarOptions: {
-  placeholder: "Pesquisar...",
-  hideWhenScrolling: true,
-  onChangeText: (event) => console.log(event.nativeEvent.text),
-},
-```
-
-## Hero Header
-
-O projeto inclui como alternativa o padrão de layout "Hero", que consiste em um cabeçalho proeminente integrado com a rolagem da tela. Ele esconde o header nativo e possui um truque visual com a barra de status, que alterna dinamicamente entre cores escuras e claras ao rolar a página.
-
-Os componentes estão disponíveis em `src/components/home/hero-header.tsx` e `src/components/home/hero-scroll-view.tsx`.
-
-Veja abaixo um exemplo de como implementar esse padrão na sua Home:
-
-```tsx
-import { Stack } from "expo-router";
-import { View } from "react-native";
-
-import { HeroHeader } from "@/components/home/hero-header";
-import { HeroScrollView } from "@/components/home/hero-scroll-view";
-import { Text } from "@/components/text";
-
-export default function HomeScreen() {
-  return (
-    <>
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-      />
-      <HeroScrollView>
-        <HeroHeader />
-        <View style={{ padding: 16, gap: 12 }}>
-          <Text>Welcome to Expo</Text>
-        </View>
-      </HeroScrollView>
-    </>
-  );
+if (Platform.OS === "ios") {
+  return <IosNativeTabs colors={colors} />;
 }
 ```
 
-## Scripts recomendados
+## Recommended scripts
 
-Adicione os seguintes scripts ao `package.json` do seu novo projeto:
+Add the following scripts to the `package.json` of your new project:
 
 ```json
 "scripts": {
@@ -113,17 +62,10 @@ Adicione os seguintes scripts ao `package.json` do seu novo projeto:
   "ios:native": "expo run:ios",
   "web": "expo start --web",
   "lint": "expo lint",
-  "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,md}\"",
   "build:android": "npx expo prebuild --platform android && cd android && ./gradlew assembleRelease && cd .. && mkdir -p apk && cp android/app/build/outputs/apk/release/app-release.apk \"apk/$npm_package_name-v$npm_package_version.apk\""
 }
 ```
 
-- **`android` / `ios`** — inicia o servidor Expo apontando para a plataforma, sem recompilar (ideal para Expo Go).
-- **`android:native` / `ios:native`** — compila e roda o app nativamente (`expo run`).
-- **`format`** — formata os arquivos do projeto (na pasta `src/`) usando o Prettier.
-- **`build:android`** — gera o APK de release e o copia para a pasta `apk/` com nome e versão do `package.json`.
-
-> **Nota sobre a formatação:** Se utilizar o script de formatação, será necessário instalar o Prettier no seu projeto como dependência de desenvolvimento:
-> ```bash
-> npm install -D prettier
-> ```
+- **`android` / `ios`** — starts the Expo server targeting the platform without recompiling (ideal for Expo Go).
+- **`android:native` / `ios:native`** — builds and runs the app natively (`expo run`).
+- **`build:android`** — builds the release APK and copies it to the `apk/` folder with the name and version from `package.json`.
