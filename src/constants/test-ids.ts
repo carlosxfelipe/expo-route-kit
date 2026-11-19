@@ -59,14 +59,6 @@ export const testIds = {
     welcomeBanner: "card_home_welcome",
     exploreCard: "btn_home_explore",
     profileCard: "btn_home_profile",
-    logoutCard: "btn_home_logout",
-    appearanceCard: "btn_home_appearance",
-    appearanceSheet: "sheet_home_appearance",
-    themeModeSwitcher: "switcher_theme_mode",
-    themePresetSwitcher: "switcher_theme_preset",
-    logoutSheet: "sheet_home_logout",
-    logoutCancelButton: "btn_logout_cancel",
-    logoutConfirmButton: "btn_logout_confirm",
   },
 
   // Explore Screen
@@ -111,8 +103,22 @@ export const testIds = {
   profile: {
     screen: "screen_profile",
     header: "header_profile",
+    scroll: "scroll_profile",
+    avatar: "avatar_profile",
     title: "txt_profile_title",
     description: "txt_profile_description",
+    editProfileCard: "btn_profile_edit",
+    notificationsCard: "btn_profile_notifications_card",
+    notificationsSwitch: "switch_profile_notifications",
+    privacyCard: "btn_profile_privacy",
+    appearanceCard: "btn_profile_appearance",
+    appearanceSheet: "sheet_profile_appearance",
+    themeModeSwitcher: "switcher_theme_mode",
+    themePresetSwitcher: "switcher_theme_preset",
+    signOutButton: "btn_profile_sign_out",
+    signOutSheet: "sheet_profile_sign_out",
+    signOutCancelButton: "btn_profile_sign_out_cancel",
+    signOutConfirmButton: "btn_profile_sign_out_confirm",
   },
 
   // Global Snackbar

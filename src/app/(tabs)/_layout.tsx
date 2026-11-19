@@ -7,6 +7,42 @@ import { testIds } from "@/constants/test-ids";
 import { IosNativeTabs } from "@/layouts/ios-native-tabs";
 import { useAppTheme } from "@/theme";
 
+export interface TabItem {
+  name: string;
+  title: string;
+  testID?: string;
+  accessibilityLabel?: string;
+  activeIcon: AppIconName;
+  inactiveIcon: AppIconName;
+}
+
+const TABS: readonly TabItem[] = [
+  {
+    name: "index",
+    title: "Home",
+    testID: testIds.tabs.home,
+    accessibilityLabel: "Home",
+    activeIcon: "home",
+    inactiveIcon: "home-outline",
+  },
+  {
+    name: "explore",
+    title: "Explore",
+    testID: testIds.tabs.explore,
+    accessibilityLabel: "Explore",
+    activeIcon: "compass",
+    inactiveIcon: "compass-outline",
+  },
+  {
+    name: "profile",
+    title: "Profile",
+    testID: testIds.tabs.profile,
+    accessibilityLabel: "Profile",
+    activeIcon: "account",
+    inactiveIcon: "account-outline",
+  },
+];
+
 function TabBarIcon({
   focused,
   activeIcon,
@@ -40,8 +76,9 @@ export default function MainShellLayout() {
   const { colors } = useAppTheme();
   const insets = useSafeAreaInsets();
 
+  // If you don't want the iOS liquid glass native tab bar, comment out this block to use the JS Tabs fallback.
   if (Platform.OS === "ios") {
-    return <IosNativeTabs colors={colors} />;
+    return <IosNativeTabs colors={colors} tabs={TABS} />;
   }
 
   return (
@@ -63,51 +100,24 @@ export default function MainShellLayout() {
         },
       }}
     >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Home",
-          tabBarButtonTestID: testIds.tabs.home,
-          tabBarAccessibilityLabel: "Home",
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon
-              focused={focused}
-              activeIcon="home"
-              inactiveIcon="home-outline"
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: "Explore",
-          tabBarButtonTestID: testIds.tabs.explore,
-          tabBarAccessibilityLabel: "Explore",
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon
-              focused={focused}
-              activeIcon="compass"
-              inactiveIcon="compass-outline"
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          tabBarButtonTestID: testIds.tabs.profile,
-          tabBarAccessibilityLabel: "Profile",
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon
-              focused={focused}
-              activeIcon="account"
-              inactiveIcon="account-outline"
-            />
-          ),
-        }}
-      />
+      {TABS.map((tab) => (
+        <Tabs.Screen
+          key={tab.name}
+          name={tab.name}
+          options={{
+            title: tab.title,
+            tabBarButtonTestID: tab.testID,
+            tabBarAccessibilityLabel: tab.accessibilityLabel ?? tab.title,
+            tabBarIcon: ({ focused }) => (
+              <TabBarIcon
+                focused={focused}
+                activeIcon={tab.activeIcon}
+                inactiveIcon={tab.inactiveIcon}
+              />
+            ),
+          }}
+        />
+      ))}
     </Tabs>
   );
 }

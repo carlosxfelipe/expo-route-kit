@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -14,6 +15,28 @@ import { useAppTheme } from "@/theme";
 import { AppIcon, type AppIconName } from "./app-icon";
 
 export type AppButtonVariant = "filled" | "tonal" | "outlined" | "text";
+
+function getWebCursor(blocked: boolean): ViewStyle["cursor"] {
+  if (Platform.OS !== "web") return undefined;
+  return blocked ? "not-allowed" : "pointer";
+}
+
+function getButtonOpacity({
+  isDisabled,
+  isPressed,
+  isHovered,
+  isTransparentVariant,
+}: {
+  isDisabled: boolean;
+  isPressed: boolean;
+  isHovered: boolean;
+  isTransparentVariant: boolean;
+}): number {
+  if (isDisabled) return 0.5;
+  if (isPressed) return 0.82;
+  if (isHovered && !isTransparentVariant) return 0.9;
+  return 1;
+}
 
 export interface AppButtonProps {
   label: string;
@@ -48,6 +71,8 @@ export function AppButton({
 }: AppButtonProps) {
   const { colors, typography } = useAppTheme();
   const blocked = isDisabled || isLoading;
+  const isTransparentVariant = variant === "outlined" || variant === "text";
+  const webCursor = getWebCursor(blocked);
 
   const { backgroundColor, foregroundColor, borderColor } = (() => {
     if (isDisabled) {
@@ -97,19 +122,34 @@ export function AppButton({
       accessibilityRole="button"
       accessibilityState={{ disabled: blocked, busy: isLoading }}
       {...testProps(testID, accessibilityLabel ?? label)}
-      style={({ pressed }) => [
-        styles.base,
-        {
-          minHeight: height,
-          borderRadius,
-          backgroundColor,
-          borderColor,
-          borderWidth: variant === "outlined" ? 1 : 0,
-          alignSelf: fullWidth ? "stretch" : "flex-start",
-          opacity: isDisabled ? 0.5 : pressed && !blocked ? 0.82 : 1,
-        },
-        style,
-      ]}
+      style={(state) => {
+        const hovered = Boolean((state as { hovered?: boolean }).hovered);
+        const isHovered = hovered && !blocked;
+        const isPressed = state.pressed && !blocked;
+
+        return [
+          styles.base,
+          {
+            minHeight: height,
+            borderRadius,
+            backgroundColor:
+              isHovered && isTransparentVariant
+                ? colors.surfaceContainer
+                : backgroundColor,
+            borderColor,
+            borderWidth: variant === "outlined" ? 1 : 0,
+            alignSelf: fullWidth ? "stretch" : "flex-start",
+            opacity: getButtonOpacity({
+              isDisabled,
+              isPressed,
+              isHovered,
+              isTransparentVariant,
+            }),
+            cursor: webCursor,
+          },
+          style,
+        ];
+      }}
     >
       <View style={styles.contentWrapper}>
         <View

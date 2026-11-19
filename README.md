@@ -50,9 +50,11 @@ If you prefer not to use this native effect and want the traditional Expo Router
 
 ```tsx
 if (Platform.OS === "ios") {
-  return <IosNativeTabs colors={colors} />;
+  return <IosNativeTabs colors={colors} tabs={TABS} />;
 }
 ```
+
+Tab definitions (`TABS` in `src/app/(tabs)/_layout.tsx`) are shared across both `IosNativeTabs` on iOS and `Tabs` on Android/Web.
 
 ## Authentication Flow
 
@@ -76,7 +78,7 @@ The template supports **Light**, **Dark**, and **System** appearance modes (`The
 **Where to switch:**
 
 - **Default preset in code:** update `DEFAULT_THEME_PRESET` in `src/theme/theme-mode.tsx` (`"custom_blue"` or `"deep_purple"`).
-- **At runtime (UI):** tap **Appearance** on the **Home** screen to toggle both appearance mode (`ThemeSwitcher`) and color palette (`ThemePresetSwitcher`), or call `setThemeMode` / `setThemePreset` from `useThemeMode()`.
+- **At runtime (UI):** tap **Appearance** on the **Profile** screen to toggle both appearance mode (`ThemeSwitcher`) and color palette (`ThemePresetSwitcher`), or call `setThemeMode` / `setThemePreset` from `useThemeMode()`.
 
 ## Core Components & Screens
 
@@ -87,8 +89,16 @@ The template supports **Light**, **Dark**, and **System** appearance modes (`The
 
 All screens, tabs (both `IosNativeTabs` on iOS and `Tabs` on Android/Web), inputs, buttons, switches, and bottom sheets are wired for **Maestro** automated testing:
 
-- **Centralized registry:** `testIds` in `src/constants/test-ids.ts` (e.g., `testIds.login.emailInput`, `testIds.tabs.explore`, `testIds.home.logoutConfirmButton`).
+- **Centralized registry:** `testIds` in `src/constants/test-ids.ts` (e.g., `testIds.login.emailInput`, `testIds.tabs.explore`, `testIds.profile.signOutConfirmButton`).
 - **Cross-platform helpers:** `testProps`, `leafTestProps`, and `viewTestProps` in `src/constants/test-ids.ts` handle `collapsable={false}` (preventing Android view flattening) and iOS accessibility separation (so nested controls like `Switch` inside `AppListCard` remain independently targetable).
+
+## Web Support
+
+Since targeting the web is not the primary focus of most React Native projects, this template prioritizes mobile (iOS and Android). Even so, a few targeted adjustments are included to keep the React Native Web experience smooth:
+
+- **Autofill handling (`src/components/core/web-autofill.ts` & `AppTextField`):** prevents browser autofill from overriding theme colors or overlapping floating labels.
+- **Hover & cursor states (`AppButton`):** adds subtle hover feedback and appropriate pointer/disabled cursors on desktop browsers.
+- **JS Tabs fallback (`src/app/(tabs)/_layout.tsx`):** renders the standard Expo Router `Tabs` layout on Web alongside Android.
 
 ## Recommended scripts
 

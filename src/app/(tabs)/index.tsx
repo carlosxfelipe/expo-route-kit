@@ -1,27 +1,16 @@
 import { useRouter } from "expo-router";
-import { useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useAuthSession } from "@/auth";
 import {
   AppBannerCard,
-  AppBottomSheet,
-  AppButton,
   AppHeader,
   type AppIconName,
   AppListCard,
-  ThemePresetSwitcher,
-  ThemeSwitcher,
   useSnackbar,
 } from "@/components/core";
 import { testIds, viewTestProps } from "@/constants/test-ids";
-import {
-  THEME_MODE_LABELS,
-  THEME_PRESET_LABELS,
-  useAppTheme,
-  useThemeMode,
-} from "@/theme";
+import { useAppTheme } from "@/theme";
 
 interface ShortcutItem {
   icon: AppIconName;
@@ -50,14 +39,9 @@ const SHORTCUTS: readonly ShortcutItem[] = [
 
 export default function HomeScreen() {
   const { colors, typography } = useAppTheme();
-  const { themeMode, themePreset } = useThemeMode();
-  const { signOut } = useAuthSession();
   const { showSnackbar } = useSnackbar();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-
-  const [logoutSheetVisible, setLogoutSheetVisible] = useState(false);
-  const [appearanceSheetVisible, setAppearanceSheetVisible] = useState(false);
 
   return (
     <View
@@ -100,82 +84,7 @@ export default function HomeScreen() {
             testID={item.testID}
           />
         ))}
-        <AppListCard
-          icon="logout"
-          title="Logout"
-          subtitle="Sign out of your account"
-          showChevron={false}
-          onPress={() => setLogoutSheetVisible(true)}
-          testID={testIds.home.logoutCard}
-        />
-
-        <Text style={[typography.titleMedium, styles.sectionTitle]}>
-          Preferences
-        </Text>
-        <AppListCard
-          icon="cog-outline"
-          title="Appearance"
-          subtitle={`Theme: ${THEME_MODE_LABELS[themeMode]} · ${THEME_PRESET_LABELS[themePreset]}`}
-          onPress={() => setAppearanceSheetVisible(true)}
-          testID={testIds.home.appearanceCard}
-        />
       </ScrollView>
-
-      <AppBottomSheet
-        visible={appearanceSheetVisible}
-        onClose={() => setAppearanceSheetVisible(false)}
-        title="Appearance"
-        testID={testIds.home.appearanceSheet}
-      >
-        <Text style={[typography.titleMedium, styles.sheetLabel]}>
-          App theme
-        </Text>
-        <ThemeSwitcher testID={testIds.home.themeModeSwitcher} />
-        <Text style={[typography.titleMedium, styles.sheetPresetLabel]}>
-          Color palette
-        </Text>
-        <ThemePresetSwitcher testID={testIds.home.themePresetSwitcher} />
-      </AppBottomSheet>
-
-      <AppBottomSheet
-        visible={logoutSheetVisible}
-        onClose={() => setLogoutSheetVisible(false)}
-        title="Logout"
-        testID={testIds.home.logoutSheet}
-      >
-        <Text
-          style={[
-            typography.bodyMedium,
-            styles.logoutMessage,
-            { color: colors.onSurfaceVariant },
-          ]}
-        >
-          Are you sure you want to sign out of your account?
-        </Text>
-        <View style={styles.sheetActions}>
-          <View style={styles.actionItem}>
-            <AppButton
-              label="Cancel"
-              variant="outlined"
-              fullWidth
-              onPress={() => setLogoutSheetVisible(false)}
-              testID={testIds.home.logoutCancelButton}
-            />
-          </View>
-          <View style={styles.actionItem}>
-            <AppButton
-              label="Logout"
-              leftIcon="logout"
-              fullWidth
-              onPress={() => {
-                setLogoutSheetVisible(false);
-                signOut();
-              }}
-              testID={testIds.home.logoutConfirmButton}
-            />
-          </View>
-        </View>
-      </AppBottomSheet>
     </View>
   );
 }
@@ -191,22 +100,5 @@ const styles = StyleSheet.create({
   sectionTitle: {
     marginTop: 20,
     marginBottom: 8,
-  },
-  sheetLabel: {
-    marginBottom: 12,
-  },
-  sheetPresetLabel: {
-    marginTop: 18,
-    marginBottom: 12,
-  },
-  logoutMessage: {
-    marginBottom: 20,
-  },
-  sheetActions: {
-    flexDirection: "row",
-    gap: 12,
-  },
-  actionItem: {
-    flex: 1,
   },
 });

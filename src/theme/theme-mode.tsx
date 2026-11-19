@@ -1,11 +1,13 @@
+import * as SystemUI from "expo-system-ui";
 import {
   createContext,
   type ReactNode,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
-import { useColorScheme } from "react-native";
+import { Appearance, Platform, useColorScheme } from "react-native";
 
 import { CustomBlueTheme } from "./custom-blue-theme";
 import { DeepPurpleTheme } from "./deep-purple-theme";
@@ -76,6 +78,15 @@ export function AppThemeProvider({
       theme,
     };
   }, [systemColorScheme, themeMode, themePreset]);
+
+  useEffect(() => {
+    if (Platform.OS !== "web") {
+      Appearance.setColorScheme(themeMode === "system" ? "auto" : themeMode);
+    }
+    SystemUI.setBackgroundColorAsync(value.theme.colors.surface).catch(
+      () => {},
+    );
+  }, [themeMode, value.theme.colors.surface]);
 
   return (
     <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>

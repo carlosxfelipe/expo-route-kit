@@ -1,14 +1,15 @@
 import { MaterialDesignIcons } from "@react-native-vector-icons/material-design-icons";
 import { NativeTabs } from "expo-router/native-tabs";
 
-import { testIds } from "@/constants/test-ids";
+import type { TabItem } from "@/app/(tabs)/_layout";
 import { type AppColorScheme, useAppTheme } from "@/theme";
 
 export interface IosNativeTabsProps {
   colors?: AppColorScheme;
+  tabs: readonly TabItem[];
 }
 
-export function IosNativeTabs({ colors }: IosNativeTabsProps) {
+export function IosNativeTabs({ colors, tabs }: IosNativeTabsProps) {
   const theme = useAppTheme();
   const resolvedColors = colors ?? theme.colors;
 
@@ -24,80 +25,33 @@ export function IosNativeTabs({ colors }: IosNativeTabsProps) {
         selected: { color: resolvedColors.primary },
       }}
     >
-      <NativeTabs.Trigger
-        name="index"
-        testID={testIds.tabs.home}
-        accessibilityLabel="Home"
-      >
-        <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
-        <NativeTabs.Trigger.Icon
-          src={{
-            default: (
-              <NativeTabs.Trigger.VectorIcon
-                family={MaterialDesignIcons}
-                name="home-outline"
-              />
-            ),
-            selected: (
-              <NativeTabs.Trigger.VectorIcon
-                family={MaterialDesignIcons}
-                name="home"
-              />
-            ),
-          }}
-          renderingMode="template"
-        />
-      </NativeTabs.Trigger>
-
-      <NativeTabs.Trigger
-        name="explore"
-        testID={testIds.tabs.explore}
-        accessibilityLabel="Explore"
-      >
-        <NativeTabs.Trigger.Label>Explore</NativeTabs.Trigger.Label>
-        <NativeTabs.Trigger.Icon
-          src={{
-            default: (
-              <NativeTabs.Trigger.VectorIcon
-                family={MaterialDesignIcons}
-                name="compass-outline"
-              />
-            ),
-            selected: (
-              <NativeTabs.Trigger.VectorIcon
-                family={MaterialDesignIcons}
-                name="compass"
-              />
-            ),
-          }}
-          renderingMode="template"
-        />
-      </NativeTabs.Trigger>
-
-      <NativeTabs.Trigger
-        name="profile"
-        testID={testIds.tabs.profile}
-        accessibilityLabel="Profile"
-      >
-        <NativeTabs.Trigger.Label>Profile</NativeTabs.Trigger.Label>
-        <NativeTabs.Trigger.Icon
-          src={{
-            default: (
-              <NativeTabs.Trigger.VectorIcon
-                family={MaterialDesignIcons}
-                name="account-outline"
-              />
-            ),
-            selected: (
-              <NativeTabs.Trigger.VectorIcon
-                family={MaterialDesignIcons}
-                name="account"
-              />
-            ),
-          }}
-          renderingMode="template"
-        />
-      </NativeTabs.Trigger>
+      {tabs.map((tab) => (
+        <NativeTabs.Trigger
+          key={tab.name}
+          name={tab.name}
+          testID={tab.testID}
+          accessibilityLabel={tab.accessibilityLabel ?? tab.title}
+        >
+          <NativeTabs.Trigger.Label>{tab.title}</NativeTabs.Trigger.Label>
+          <NativeTabs.Trigger.Icon
+            src={{
+              default: (
+                <NativeTabs.Trigger.VectorIcon
+                  family={MaterialDesignIcons}
+                  name={tab.inactiveIcon}
+                />
+              ),
+              selected: (
+                <NativeTabs.Trigger.VectorIcon
+                  family={MaterialDesignIcons}
+                  name={tab.activeIcon}
+                />
+              ),
+            }}
+            renderingMode="template"
+          />
+        </NativeTabs.Trigger>
+      ))}
     </NativeTabs>
   );
 }

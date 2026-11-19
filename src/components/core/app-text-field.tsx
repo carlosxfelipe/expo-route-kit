@@ -1,4 +1,10 @@
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import {
+  type ComponentRef,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   Animated,
   Pressable,
@@ -17,7 +23,11 @@ import { testProps, viewTestProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
 
 import { AppIcon, type AppIconName } from "./app-icon";
-import { ensureWebAutofillStyle, getWebInputProps } from "./web-autofill";
+import {
+  ensureWebAutofillStyle,
+  getWebInputProps,
+  useWebAutofillDetection,
+} from "./web-autofill";
 
 export interface AppTextFieldProps {
   value?: string;
@@ -73,10 +83,13 @@ export function AppTextField({
   const [isObscured, setIsObscured] = useState(obscureText);
   const [internalText, setInternalText] = useState(value ?? "");
   const [isAutofilled, setIsAutofilled] = useState(false);
+  const inputRef = useRef<ComponentRef<typeof TextInput>>(null);
 
   useEffect(() => {
     ensureWebAutofillStyle();
   }, []);
+
+  useWebAutofillDetection(inputRef, setIsAutofilled);
 
   useEffect(() => {
     setIsObscured(obscureText);
@@ -149,7 +162,6 @@ export function AppTextField({
   const webInput = getWebInputProps(
     colors.surfaceContainerLow,
     colors.onSurface,
-    () => setIsAutofilled(true),
   );
 
   const effectiveSuffix =
@@ -242,6 +254,7 @@ export function AppTextField({
           </View>
         ) : null}
         <TextInput
+          ref={inputRef}
           value={currentValue}
           onChangeText={handleChangeText}
           placeholder={isFocused && hintText ? hintText : undefined}
