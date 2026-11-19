@@ -12,7 +12,10 @@ import {
   View,
   useWindowDimensions,
 } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  initialWindowMetrics,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 
 import { testProps, viewTestProps } from "@/constants/test-ids";
 import { useAppTheme } from "@/theme";
@@ -38,6 +41,9 @@ export function AppBottomSheet({
 }: AppBottomSheetProps) {
   const { colors, typography } = useAppTheme();
   const insets = useSafeAreaInsets();
+  // Modal renders above the tab bar, so use the window's bottom inset instead of
+  // the screen's inset (which includes the floating iOS NativeTabs bar height).
+  const bottomInset = initialWindowMetrics?.insets.bottom ?? insets.bottom;
   const { height: windowHeight } = useWindowDimensions();
   const offscreenY = Math.max(windowHeight, 500);
 
@@ -152,7 +158,7 @@ export function AppBottomSheet({
             styles.sheet,
             {
               backgroundColor: colors.surfaceContainerLow,
-              paddingBottom: Math.max(insets.bottom, 16) + 8,
+              paddingBottom: Math.max(bottomInset, 16) + 8,
               transform: [{ translateY: sheetTranslateY }],
             },
           ]}
