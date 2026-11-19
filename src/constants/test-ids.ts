@@ -59,6 +59,7 @@ export const testIds = {
     welcomeBanner: "card_home_welcome",
     exploreCard: "btn_home_explore",
     profileCard: "btn_home_profile",
+    githubCard: "btn_home_github",
   },
 
   // Explore Screen

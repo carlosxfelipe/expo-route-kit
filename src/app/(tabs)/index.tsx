@@ -1,4 +1,5 @@
 import { useRouter } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -19,6 +20,8 @@ interface ShortcutItem {
   route: "/explore" | "/profile";
   testID: string;
 }
+
+const GITHUB_REPO_URL = "https://github.com/carlosxfelipe/expo-route-kit";
 
 const SHORTCUTS: readonly ShortcutItem[] = [
   {
@@ -88,6 +91,21 @@ export default function HomeScreen() {
             testID={item.testID}
           />
         ))}
+
+        <Text style={[typography.titleMedium, styles.sectionTitle]}>
+          Resources
+        </Text>
+        <AppListCard
+          icon="github"
+          title="GitHub Repository"
+          subtitle="carlosxfelipe/expo-route-kit"
+          onPress={() => {
+            void WebBrowser.openBrowserAsync(GITHUB_REPO_URL).catch(() => {
+              showSnackbar("Could not open GitHub repository");
+            });
+          }}
+          testID={testIds.home.githubCard}
+        />
       </ScrollView>
     </View>
   );
