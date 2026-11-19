@@ -95,6 +95,8 @@ export function AppSearchHeader({
         styles.wrapper,
         {
           paddingTop: safeAreaTop ? insets.top : 0,
+          paddingLeft: safeAreaTop ? insets.left : 0,
+          paddingRight: safeAreaTop ? insets.right : 0,
           backgroundColor: colors.surface,
         },
         style,

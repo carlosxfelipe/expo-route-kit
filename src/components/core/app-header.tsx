@@ -92,7 +92,12 @@ export function AppHeader({
       {...viewTestProps(testID)}
       style={[
         styles.container,
-        { paddingTop: insets.top, backgroundColor: resolvedBg },
+        {
+          paddingTop: insets.top,
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
+          backgroundColor: resolvedBg,
+        },
       ]}
     >
       <View style={styles.toolbar}>

@@ -56,6 +56,12 @@ if (Platform.OS === "ios") {
 
 Tab definitions (`TABS` in `src/app/(tabs)/_layout.tsx`) are shared across both `IosNativeTabs` on iOS and `Tabs` on Android/Web.
 
+## Foldable Support (iPhone Duo)
+
+Initial support for **iPhone Duo** has been added by applying horizontal safe area insets (`insets.left` and `insets.right`) across headers and scrollable screens so content and header actions stay clear of side cutouts.
+
+For the best experience on **iPhone Duo**, keep **`IosNativeTabs`** enabled on iOS (the default behavior in `src/app/(tabs)/_layout.tsx`), as the native tab bar automatically adapts to the device's layout.
+
 ## Authentication Flow
 
 Route protection is handled with `Stack.Protected` in `src/app/_layout.tsx` and controlled by the `REQUIRE_AUTH` flag in `src/auth/auth-session.tsx`:

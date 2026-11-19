@@ -84,7 +84,11 @@ export default function ExploreScreen() {
         {...viewTestProps(testIds.explore.scroll)}
         contentContainerStyle={[
           styles.content,
-          { paddingBottom: 28 + insets.bottom },
+          {
+            paddingLeft: 16 + insets.left,
+            paddingRight: 16 + insets.right,
+            paddingBottom: 28 + insets.bottom,
+          },
         ]}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}

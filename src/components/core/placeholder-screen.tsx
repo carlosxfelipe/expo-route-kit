@@ -32,7 +32,16 @@ export function PlaceholderScreen({
       style={[styles.container, { backgroundColor: colors.surface }]}
     >
       <AppHeader title={title} testID={headerTestID} />
-      <View style={[styles.body, { paddingBottom: 24 + insets.bottom }]}>
+      <View
+        style={[
+          styles.body,
+          {
+            paddingLeft: 24 + insets.left,
+            paddingRight: 24 + insets.right,
+            paddingBottom: 24 + insets.bottom,
+          },
+        ]}
+      >
         <Text
           {...testProps(titleTestID, title)}
           style={[

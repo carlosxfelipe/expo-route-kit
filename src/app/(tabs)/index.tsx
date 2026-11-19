@@ -61,7 +61,11 @@ export default function HomeScreen() {
         {...viewTestProps(testIds.home.scroll)}
         contentContainerStyle={[
           styles.content,
-          { paddingBottom: 24 + insets.bottom },
+          {
+            paddingLeft: 16 + insets.left,
+            paddingRight: 16 + insets.right,
+            paddingBottom: 24 + insets.bottom,
+          },
         ]}
         showsVerticalScrollIndicator={false}
       >
