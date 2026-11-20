@@ -97,6 +97,19 @@ All screens, tabs (both `IosNativeTabs` on iOS and `Tabs` on Android/Web), input
 
 - **Centralized registry:** `testIds` in `src/constants/test-ids.ts` (e.g., `testIds.login.emailInput`, `testIds.tabs.explore`, `testIds.profile.signOutConfirmButton`).
 - **Cross-platform helpers:** `testProps`, `leafTestProps`, and `viewTestProps` in `src/constants/test-ids.ts` handle `collapsable={false}` (preventing Android view flattening) and iOS accessibility separation (so nested controls like `Switch` inside `AppListCard` remain independently targetable).
+- **Running the Android smoke flow with [Pyestro](https://github.com/carlosxfelipe/pyestro):** Pyestro is a Maestro-compatible YAML flow runner for Android via ADB.
+
+  1. Install it globally (requires [`uv`](https://docs.astral.sh/uv/)):
+
+     ```bash
+     uv tool install git+https://github.com/carlosxfelipe/pyestro.git
+     ```
+
+  2. With the app installed on an Android device or emulator, run the sample smoke flow in `.maestro/smoke.yaml`:
+
+     ```bash
+     pyestro test .maestro/smoke.yaml
+     ```
 
 ## Web Support
 

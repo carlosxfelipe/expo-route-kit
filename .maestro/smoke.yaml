@@ -1,0 +1,44 @@
+appId: com.carlosxfelipe.exporoutekit
+name: Smoke - Login and Navigation
+tags:
+  - smoke
+env:
+  EMAIL: user@example.com
+  PASS: "123456"
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: input_login_email
+    timeout: 15000
+- assertVisible: "Welcome back"
+- tapOn:
+    id: input_login_email
+- inputText: ${EMAIL}
+- tapOn:
+    id: input_login_password
+- inputText: ${PASS}
+- hideKeyboard
+- tapOn:
+    id: btn_login_sign_in
+- extendedWaitUntil:
+    visible: "Welcome to Expo Route Kit"
+    timeout: 5000
+- tapOn:
+    id: tab_explore
+- assertVisible: "AppButton Variants"
+- tapOn:
+    id: tab_profile
+- assertVisible: "user@example.com"
+- tapOn:
+    id: btn_profile_sign_out
+- extendedWaitUntil:
+    visible:
+      id: btn_profile_sign_out_confirm
+    timeout: 5000
+- tapOn:
+    id: btn_profile_sign_out_confirm
+- extendedWaitUntil:
+    visible:
+      id: btn_login_sign_in
+    timeout: 5000
