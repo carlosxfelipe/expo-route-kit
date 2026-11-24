@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { AppIcon, type AppIconName } from "@/components/core";
 import { testIds } from "@/constants/test-ids";
-import { IosNativeTabs } from "@/layouts/ios-native-tabs";
+import { AndroidNativeTabs, IosNativeTabs } from "@/layouts/native-tabs";
 import { useAppTheme } from "@/theme";
 
 export interface TabItem {
@@ -76,9 +76,13 @@ export default function MainShellLayout() {
   const { colors } = useAppTheme();
   const insets = useSafeAreaInsets();
 
-  // If you don't want the iOS liquid glass native tab bar, comment out this block to use the JS Tabs fallback.
+  // If you don't want the native tab bars, comment out these blocks to use the JS Tabs fallback.
   if (Platform.OS === "ios") {
     return <IosNativeTabs colors={colors} tabs={TABS} />;
+  }
+
+  if (Platform.OS === "android") {
+    return <AndroidNativeTabs colors={colors} tabs={TABS} />;
   }
 
   return (

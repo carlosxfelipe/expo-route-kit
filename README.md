@@ -43,18 +43,22 @@ npm run ios
 npm run web
 ```
 
-## Tab Bar Customization (iOS)
+## Tab Bar Customization (Native Tabs vs JS Tabs)
 
-This template includes by default a native tab bar with a translucent (liquid glass) effect exclusive to iOS.
-If you prefer not to use this native effect and want the traditional Expo Router fallback (the same one that runs on Android), open `src/app/(tabs)/_layout.tsx` and delete the following code block:
+This template includes native tab bars on mobile by default (`IosNativeTabs` with liquid glass on iOS and `AndroidNativeTabs` with Material 3 on Android), while Web uses the traditional Expo Router `Tabs` (`expo-router/js-tabs`) fallback.
+If you prefer not to use native tabs on iOS or Android and want the JS `Tabs` fallback instead, open `src/app/(tabs)/_layout.tsx` and remove the corresponding platform block:
 
 ```tsx
 if (Platform.OS === "ios") {
   return <IosNativeTabs colors={colors} tabs={TABS} />;
 }
+
+if (Platform.OS === "android") {
+  return <AndroidNativeTabs colors={colors} tabs={TABS} />;
+}
 ```
 
-Tab definitions (`TABS` in `src/app/(tabs)/_layout.tsx`) are shared across both `IosNativeTabs` on iOS and `Tabs` on Android/Web.
+Tab definitions (`TABS` in `src/app/(tabs)/_layout.tsx`) are shared across `IosNativeTabs`, `AndroidNativeTabs`, and `Tabs`.
 
 ## Foldable Support (iPhone Duo)
 
@@ -130,7 +134,7 @@ The template supports **Light**, **Dark**, and **System** appearance modes (`The
 
 ## E2E Testing with Maestro
 
-All screens, tabs (both `IosNativeTabs` on iOS and `Tabs` on Android/Web), inputs, buttons, switches, and bottom sheets are wired for **Maestro** automated testing:
+All screens, tabs (`IosNativeTabs` on iOS, `AndroidNativeTabs` on Android, and `Tabs` on Web), inputs, buttons, switches, and bottom sheets are wired for **Maestro** automated testing:
 
 - **Centralized registry:** `testIds` in `src/constants/test-ids.ts` (e.g., `testIds.login.emailInput`, `testIds.tabs.explore`, `testIds.profile.signOutConfirmButton`).
 - **Cross-platform helpers:** `testProps`, `leafTestProps`, and `viewTestProps` in `src/constants/test-ids.ts` handle `collapsable={false}` (preventing Android view flattening) and iOS accessibility separation (so nested controls like `Switch` inside `AppListCard` remain independently targetable).
@@ -177,3 +181,9 @@ Add the following scripts to the `package.json` of your new project:
 - **`android` / `ios`** — starts the Expo server targeting the platform without recompiling (ideal for Expo Go).
 - **`android:native` / `ios:native`** — builds and runs the app natively (`expo run`).
 - **`build:android`** — builds the release APK and copies it to the `apk/` folder with the name and version from `package.json`.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+Copyright (c) 2026 **Carlos Felipe Araújo**.
