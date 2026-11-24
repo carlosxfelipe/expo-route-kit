@@ -1,3 +1,4 @@
+// import { NavigationBar } from "expo-navigation-bar";
 import { Stack, ThemeProvider } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
@@ -47,6 +48,7 @@ function RootNavigator() {
   return (
     <ThemeProvider value={toNavigationTheme(theme)}>
       <StatusBar style={theme.isDark ? "light" : "dark"} />
+      {/* <NavigationBar style={theme.isDark ? "light" : "dark"} /> */}
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Protected guard={!REQUIRE_AUTH || isAuthenticated}>
           <Stack.Screen name="(tabs)" />

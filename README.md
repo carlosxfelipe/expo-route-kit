@@ -62,6 +62,43 @@ Initial support for **iPhone Duo** has been added by applying horizontal safe ar
 
 For the best experience on **iPhone Duo**, keep **`IosNativeTabs`** enabled on iOS (the default behavior in `src/app/(tabs)/_layout.tsx`), as the native tab bar automatically adapts to the device's layout.
 
+## Android 3-Button Navigation Support
+
+By default, this template does not bundle `expo-navigation-bar` because not every project targets Android's classic 3-button navigation bar. If you want the 3-button navigation bar icons and background to adapt cleanly to the app's Light/Dark theme, follow these steps:
+
+1. **Install `expo-navigation-bar`:**
+
+   ```bash
+   npx expo install expo-navigation-bar
+   ```
+
+2. **Add the config plugin in `app.json`:**
+   Add `"expo-navigation-bar"` with `"enforceContrast": false` to the `expo.plugins` array so Android does not force a default contrast scrim over the navigation bar:
+
+   ```json
+   [
+     "expo-navigation-bar",
+     {
+       "enforceContrast": false
+     }
+   ]
+   ```
+
+3. **Render `NavigationBar` in `src/app/_layout.tsx`:**
+   Import `NavigationBar` from `expo-navigation-bar` and render it inside `RootNavigator` alongside `StatusBar` so its button style follows the active theme:
+
+   ```tsx
+   import { NavigationBar } from "expo-navigation-bar";
+   ```
+
+   ```tsx
+   <StatusBar style={theme.isDark ? "light" : "dark"} />
+   <NavigationBar style={theme.isDark ? "light" : "dark"} />
+   ```
+
+4. **Rebuild the native Android app:**
+   Since the `app.json` plugin updates native Android configuration, trigger a new native Android build for the `enforceContrast` setting to take effect.
+
 ## Authentication Flow
 
 Route protection is handled with `Stack.Protected` in `src/app/_layout.tsx` and controlled by the `REQUIRE_AUTH` flag in `src/auth/auth-session.tsx`:
